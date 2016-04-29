@@ -1,11 +1,120 @@
+{{!-- Spreadsheet style view for issues (filter & sort features) --}}
+{{!-- 
+- submission timestamp
+- customer name
+- customer email
+- description
+- open/closed status
+- closed timestamp
+- employee name
+ --}}
 {{ top-bar title='Issues' }}
 
 <main class="mdl-layout__content mdl-color--grey-100">
   <div class="mdl-grid demo-content">
-    <ul>
+{{!--     <ul>
     {{#each model as |data| }}
       <li><p>{{ data.id }} {{ data.customer_name }}</p></li>
     {{/each}}
-    </ul>
+    </ul> --}}
+
+
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th class="mdl-data-table__cell--non-numeric">Status</th>
+          <th class="mdl-data-table__cell--non-numeric">Description</th>
+          <th class="mdl-data-table__cell--non-numeric">Customer Name</th>
+          <th class="mdl-data-table__cell--non-numeric">Customer Email</th>
+          <th>Submitted date/time</th>
+          <th class="mdl-data-table__cell--non-numeric">Employee Name</th>
+          <th>Closed date/time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="mdl-data-table__cell--non-numeric">Open</td>
+          <td class="mdl-data-table__cell--non-numeric">Lorem ipsum dolor sit amet, consectetur  </td>
+          <td class="mdl-data-table__cell--non-numeric">Alice Smith</td>
+          <td class="mdl-data-table__cell--non-numeric">alicesmith@example.com</td>
+          <td> 2015/11/11 </td>
+          <td class="mdl-data-table__cell--non-numeric">Bob Smith</td>
+          <td> None </td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 </main>

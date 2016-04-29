@@ -213,8 +213,17 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 
 
+/* Top Bar overwrite */
+@media (min-width: 1025px) {
+  .mdl-layout__header {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+}
 
-.mdl-layout__header {
-  margin-left: 240px;
-  width: calc(100% - 240px);
+/* Sidebar overwrite */
+.demo-layout.mdl-layout.mdl-js-layout.mdl-layout--fixed-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }

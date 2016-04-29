@@ -8,6 +8,7 @@ module.exports = function(defaults) {
   });
 
   app.import('bower_components/material-design-lite/material.min.css');
+  // app.import('bower_components/material-design-lite/material.min.js');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
