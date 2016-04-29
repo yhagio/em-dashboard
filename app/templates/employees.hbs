@@ -1,0 +1,13 @@
+{{ top-bar title='Employees' }}
+
+<main class="mdl-layout__content mdl-color--grey-100">
+  <div class="mdl-grid demo-content">
+    
+    <ul>
+    {{#each model as |data| }}
+      <li><p>{{ data.employee_name }}</p></li>
+    {{/each}}
+    </ul>
+    
+  </div>
+</main>
