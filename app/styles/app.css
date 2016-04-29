@@ -216,14 +216,39 @@ _:-ms-input-placeholder, :root .demo-graph {
 /* Top Bar overwrite */
 @media (min-width: 1025px) {
   .mdl-layout__header {
-    margin-left: 240px;
-    width: calc(100% - 240px);
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+  .mdl-layout--fixed-drawer>.mdl-layout__content {
+    margin-left: 200px;
   }
 }
 
 /* Sidebar overwrite */
+
+.mdl-layout__drawer {
+  width: 200px;
+}
+
 .demo-layout.mdl-layout.mdl-js-layout.mdl-layout--fixed-drawer {
   position: absolute;
   top: 0;
   bottom: 0;
+}
+
+/* Content area */
+
+.mdl-layout__content {
+  overflow-x: scroll;
+}
+
+/* Table */
+.mdl-data-table {
+  white-space: normal;
+}
+
+.mdl-data-table th,
+.mdl-data-table td {
+  padding: 2px 10px;
+  border: 1px solid #ddd;
 }
