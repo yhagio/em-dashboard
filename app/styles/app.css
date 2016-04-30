@@ -289,3 +289,13 @@ _:-ms-input-placeholder, :root .demo-graph {
 .table-header.selected-column > .mdl-color-text--blue-grey-400.material-icons {
   display: block;
 }
+
+
+
+
+rect {
+  /*fill: #f5f5f5;*/
+  fill: #EAF7FE;
+}
+
+

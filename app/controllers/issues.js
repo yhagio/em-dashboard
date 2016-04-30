@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
   // Can filter the table by either customer's name, description, or employee's name
   filterText: '',
   filteredResults: function() {
-    var filterWord = this.get('filterText');
+    var filterWord = this.get('filterText').toLowerCase();
     if (filterWord.length > 0) {
 
       return this.get('sortedModel').filter((item) => {

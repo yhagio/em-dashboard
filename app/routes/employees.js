@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-  
+
     return $.get('/data/employees.csv')
             .then((data) => {
               let jsonData = csvJSON(data);
@@ -39,15 +39,18 @@ function createGeoView (jsonData) {
   let chicago = 0;
 
   jsonData.forEach((employee) => {
-    (employee.location == 'Boston') ? boston++ : null;
-    (employee.location == 'San Francisco') ? sanfran++ : null;
-    (employee.location == 'Chicago') ? chicago++ : null;
-    (employee.location == 'Orlando') ? orlando++ : null;
+    (employee.location === 'Boston') ? boston++ : null;
+    (employee.location === 'San Francisco') ? sanfran++ : null;
+    (employee.location === 'Chicago') ? chicago++ : null;
+    (employee.location === 'Orlando') ? orlando++ : null;
   });
 
-  google.charts.load('current', {'packages': ['geomap']});
+  google.charts.load('current', {'packages': ['geomap', 'corechart']});
   google.charts.setOnLoadCallback(drawMap);
+  google.charts.setOnLoadCallback(drawChart);
 
+
+  // Draw Geographic Map Chart of Employees
   function drawMap() {
     var data = google.visualization.arrayToDataTable([
       ['City', 'Number of Employees'],
@@ -65,5 +68,25 @@ function createGeoView (jsonData) {
     var container = document.getElementById('map-canvas');
     var geomap = new google.visualization.GeoMap(container);
     geomap.draw(data, options);
-  };
+  }
+
+  // Draw Donut Chart of Employees
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['City', 'Number of Employees'],
+      ['Boston', boston],
+      ['Orlando', orlando],
+      ['Chicago', chicago],
+      ['San Francisco', sanfran]
+    ]);
+
+    var options = {
+      title: 'Number & Percentage of Employees',
+      pieHole: 0.5,
+      pieSliceText: 'value'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+  }
 }
