@@ -8,26 +8,50 @@
 - closed timestamp
 - employee name
  --}}
-{{ top-bar title='Issues' }}
 
 <main class="mdl-layout__content mdl-color--grey-100">
   <div class="mdl-grid demo-content">
 
+    {{!-- {{input value=theFilter type='text' placeholder='Filter'}} --}}
+    
     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
       <thead>
         <tr>
-          <th>ID</th>
-          <th class="mdl-data-table__cell--non-numeric">Status</th>
-          <th class="mdl-data-table__cell--non-numeric">Description</th>
-          <th class="mdl-data-table__cell--non-numeric">Customer</th>
-          <th class="mdl-data-table__cell--non-numeric">Customer Email</th>
-          <th>Submitted date</th>
-          <th class="mdl-data-table__cell--non-numeric">Employee</th>
-          <th class="mdl-data-table__cell--non-numeric">Closed date</th>
+            <th id="table-id" {{action "sortBy" "id" "#table-id"}} class="table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>ID
+            </th>
+
+            <th id="table-status" {{action "sortBy" "status_open" "#table-status"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Status
+            </th>
+
+            <th id="table-description" {{action "sortBy" "description" "#table-description"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Description
+            </th>
+
+            <th id="table-customer" {{action "sortBy" "customer_name" "#table-customer"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Customer
+            </th>
+
+            <th id="table-customer-email" {{action "sortBy" "customer_email" "#table-customer-email"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Customer Email
+            </th>
+
+            <th id="table-submitted" {{action "sortBy" "submitted_at" "#table-submitted"}} class="table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Submitted
+            </th>
+
+            <th id="table-employee" {{action "sortBy" "employee_name" "#table-employee"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Employee
+            </th>
+
+            <th id="table-closed" {{action "sortBy" "closed_at" "#table-closed"}} class="mdl-data-table__cell--non-numeric table-header">
+              <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">keyboard_arrow_down</i>Closed
+            </th>
         </tr>
       </thead>
       <tbody>
-        {{#each model as |data| }}
+        {{#each sortedModel as |data| }}
           <tr>
             <td>{{ data.id }}</td>
             <td class="mdl-data-table__cell--non-numeric">{{ data.status_open }}</td>

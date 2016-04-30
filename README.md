@@ -115,13 +115,15 @@ Data Views (Issues) Spreadsheet-like
 - [ ] Display all issues
 - [ ] Filterable / Sortable Issues
 
-### Resources
+### Resources & Inspirations
 - https://guides.emberjs.com/v2.5.0/
 - https://getmdl.io/components/index.html
 - https://design.google.com/icons/
 - http://codepen.io/zavoloklom/pen/IGkDz?editors=1100
 - https://github.com/typicode/json-server
 - https://www.mockaroo.com/
+- http://www.jarrodctaylor.com/posts/Filter-And-Sort-Tables-In-Ember/
+- https://www.freshdesignweb.com/free-bootstrap-admin-templates/
 
 
 ```
