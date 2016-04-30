@@ -7,9 +7,13 @@ export default Ember.Route.extend({
             .then((data) => {
               let jsonData = csvJSON(data);
               
-              // Display Employee Geospatial View
-              createGeoView(jsonData);
-
+              // Display Employee Geospatial View:
+              // To avoid `document.getElementById('map-canvas')`
+              // return 'null' delay it by 100 milliseconds
+              setTimeout(() => {
+                createGeoView(jsonData);
+              }, 100);
+              
               return jsonData;
             });
   }
@@ -45,7 +49,7 @@ function createGeoView (jsonData) {
     (employee.location === 'Orlando') ? orlando++ : null;
   });
 
-  google.charts.load('current', {'packages': ['geomap', 'corechart']});
+  // google.charts.load('current', {'packages': ['geomap', 'corechart']});
   google.charts.setOnLoadCallback(drawMap);
   google.charts.setOnLoadCallback(drawChart);
 
@@ -64,9 +68,7 @@ function createGeoView (jsonData) {
     options['region'] = 'US';
     options['colors'] = [0xFF8747, 0xFFB581, 0xc06000];
     options['dataMode'] = 'markers';
-
-    var container = document.getElementById('map-canvas');
-    var geomap = new google.visualization.GeoMap(container);
+    var geomap = new google.visualization.GeoMap(document.getElementById('map-canvas'));
     geomap.draw(data, options);
   }
 
