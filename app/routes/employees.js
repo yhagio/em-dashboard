@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-
+  
     return $.get('/data/employees.csv')
             .then((data) => {
               let jsonData = csvJSON(data);
-
+              
+              // Display Employee Geospatial View
               createGeoView(jsonData);
 
               return jsonData;
@@ -61,7 +62,7 @@ function createGeoView (jsonData) {
     options['colors'] = [0xFF8747, 0xFFB581, 0xc06000];
     options['dataMode'] = 'markers';
 
-    var container = document.getElementById('map_canvas');
+    var container = document.getElementById('map-canvas');
     var geomap = new google.visualization.GeoMap(container);
     geomap.draw(data, options);
   };

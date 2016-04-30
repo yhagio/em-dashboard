@@ -124,7 +124,7 @@ Data Views (Issues) Spreadsheet-like
 - https://www.mockaroo.com/
 - http://www.jarrodctaylor.com/posts/Filter-And-Sort-Tables-In-Ember/
 - https://www.freshdesignweb.com/free-bootstrap-admin-templates/
-
+- https://developers.google.com/chart/interactive/docs/gallery/geomap
 
 ```
 bower install --save material-design-lite
