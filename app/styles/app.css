@@ -242,6 +242,22 @@ _:-ms-input-placeholder, :root .demo-graph {
   overflow-x: scroll;
 }
 
+/* Input (Issues view) */
+.mdl-textfield {
+  width: 100%;
+}
+
+.mdl-textfield__input {
+  font-size: 1.2em;
+  padding-left: 15px;
+  outline: 0;
+}
+
+.no-result {
+  margin: 10px;
+  padding: 10px;
+}
+
 /* Table */
 .mdl-data-table {
   white-space: normal;
@@ -250,17 +266,20 @@ _:-ms-input-placeholder, :root .demo-graph {
 .mdl-data-table th,
 .mdl-data-table td {
   padding: 2px 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #aaa;
+}
+
+.mdl-data-table th {
+  background-color: #dfdfdf;
 }
 
 .mdl-data-table th:hover {
   cursor: pointer;
-  background-color: #ddd;
+  background-color: #CCFFFF;
 }
 
 .mdl-data-table th.selected-column {
-  color: #000;
-  font-size: 1em;
+  color: #0000ff;
 }
 
 .mdl-color-text--blue-grey-400.material-icons {

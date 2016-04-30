@@ -4,36 +4,11 @@ export default Ember.Controller.extend({
   sortProperties: ['id:asc'],
   sortedModel: Ember.computed.sort('model', 'sortProperties'),
   sortAscending: false,
-  // selectedProperty: 'id:asc',
-  // theFilter: "",
-
-  // checkFilterMatch(theObject, str) {
-  //   let field, match;
-  //   match = false;
-  //   for (field in theObject) {
-  //     if (theObject[field].toString().slice(0, str.length) === str) {
-  //       match = true;
-  //     }
-  //   }
-  //   return match;
-  // },
-
-  // filteredIssues() {
-  //   return this.get("arrangedContent").filter((_this) => {
-  //     return (theObject, index, enumerable) => {
-  //       if (_this.get("theFilter")) {
-  //         return _this.checkFilterMatch(theObject, _this.get("theFilter"));
-  //       } else {
-  //         return true;
-  //       }
-  //     };
-  //   })(this);
-  // }.property("theFilter", "sortProperties"),
-
 
   actions: {
+    // property: the table column you want to sort by
+    // id: the id of the header of the table you want to sort
     sortBy(property, id) {
-
       if (this.get('sortAscending')) {
         this.toggleProperty('sortAscending');
         this.set('sortProperties', [property + ':asc']);
@@ -56,12 +31,25 @@ export default Ember.Controller.extend({
       // If clicked column does not 'selected-column', add the class
       if ( !$(id).hasClass('selected-column') ) {
         $(id).addClass('selected-column');
-        // if ($(id).children().text() === 'keyboard_arrow_down') {
-        //   $(id).children().text('keyboard_arrow_up');
-        // } else {
-        //   $(id).children().text('keyboard_arrow_down');
-        // }
       }
+      // console.log('sortProperties ',  this.get('sortProperties'));
+      console.log('filteredResults ',  this.get('filteredResults'));
     }
-  }
+  },
+
+  // Filter features
+  // Can filter the table by either customer's name, description, or employee's name
+  filterText: '',
+  filteredResults: function() {
+    var filterWord = this.get('filterText');
+    if (filterWord.length > 0) {
+
+      return this.get('sortedModel').filter((item) => {
+        return item.customer_name.toLowerCase().indexOf(filterWord) !== -1 ||
+               item.description.toLowerCase().indexOf(filterWord) !== -1 ||
+               item.employee_name.toLowerCase().indexOf(filterWord) !== -1;
+      });
+    }
+    return this.get('sortedModel');
+  }.property('filterText', 'sortedModel')
 });

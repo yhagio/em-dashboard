@@ -12,7 +12,11 @@
 <main class="mdl-layout__content mdl-color--grey-100">
   <div class="mdl-grid demo-content">
 
-    {{!-- {{input value=theFilter type='text' placeholder='Filter'}} --}}
+  <div class="mdl-textfield">
+    {{input value=filterText type='text' placeholder='Filter ...' class='mdl-textfield__input'}}
+  </div>
+
+    {{#if filteredResults }}
     
     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
       <thead>
@@ -51,7 +55,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each sortedModel as |data| }}
+        {{#each filteredResults as |data| }}
           <tr>
             <td>{{ data.id }}</td>
             <td class="mdl-data-table__cell--non-numeric">{{ data.status_open }}</td>
@@ -65,6 +69,12 @@
         {{/each}}
       </tbody>
     </table>
+
+    {{else}}
+      <div class="no-result">
+        <h3>None ...</h3>
+      </div>
+    {{/if}}
 
   </div>
 </main>
