@@ -1,13 +1,19 @@
+{{!-- 
+Identifying the number of employees at various company locations:
+- Display number of employees
+- Google Map Integration for the location of employees
+--}}
+
 {{ top-bar title='Employees' }}
 
 <main class="mdl-layout__content mdl-color--grey-100">
-  <div class="mdl-grid demo-content">
+
+  <div id='map_canvas'></div>
     
-    <ul>
+{{!--     <ul>
     {{#each model as |data| }}
-      <li><p>{{ data.employee_name }}</p></li>
+      <li><p>{{ data.employee_name }} - {{ data.job_title }} - {{ data.email }} - {{ data.location }}</p></li>
     {{/each}}
-    </ul>
+    </ul> --}}
     
-  </div>
 </main>

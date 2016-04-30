@@ -32,8 +32,6 @@ export default Ember.Controller.extend({
       if ( !$(id).hasClass('selected-column') ) {
         $(id).addClass('selected-column');
       }
-      // console.log('sortProperties ',  this.get('sortProperties'));
-      console.log('filteredResults ',  this.get('filteredResults'));
     }
   },
 

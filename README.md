@@ -100,7 +100,7 @@ CSV data (employees)
 Navigation menu:
 - [ ] Main area
 - [ ] Employees
-- [ ] Issues
+- [X] Issues
 
 Employees Geospatial View
 - [ ] Display number of employees
@@ -112,8 +112,8 @@ Metrics View (Issues)
 - [ ] Bar chart of number of reported issues
 
 Data Views (Issues) Spreadsheet-like
-- [ ] Display all issues
-- [ ] Filterable / Sortable Issues
+- [X] Display all issues
+- [X] Filterable / Sortable Issues
 
 ### Resources & Inspirations
 - https://guides.emberjs.com/v2.5.0/
