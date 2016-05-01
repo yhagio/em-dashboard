@@ -1,6 +1,6 @@
 # Ember-dashboard
 
-#### [DEMO](http://yhagio.github.io/em-dashboard/dist/employees)
+#### [DEMO](http://yhagio.github.io/em-dashboard/dist)
 
 ### Project Description / Requirements
 
