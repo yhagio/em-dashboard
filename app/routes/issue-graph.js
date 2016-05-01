@@ -96,5 +96,33 @@ function createLineChart (data) {
 
 // Open or Closed status of issues
 function createBarChart (data) {
+  let open = 0;
+  let closed = 0;
 
+  data.forEach((d) => {
+    if (d.status_open) {
+      open++;
+    } else {
+      closed++
+    }
+  });
+
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Status", "Number", { role: "style" } ],
+      ["Open", open, "red"],
+      ["Closed", closed, "green"],
+    ]);
+
+    var view = new google.visualization.DataView(data);
+
+    var options = {
+      title: "Open / Closed Issue Status",
+      legend: { position: "none" }
+    };
+    var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+    chart.draw(view, options);
+  }
 }
