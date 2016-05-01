@@ -69,7 +69,7 @@ Spreadsheet style view for issues (filter & sort features)
             <td class="mdl-data-table__cell--non-numeric">{{ data.customer_email }}</td>
             <td>{{ data.submitted_at }}</td>
             <td class="mdl-data-table__cell--non-numeric">{{ data.employee_name }}</td>
-            <td class="mdl-data-table__cell--non-numeric">{{ data.closed_at }}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{ checkIfclosed data.status_open date=data.closed_at }}</td>
           </tr>
         {{/each}}
       </tbody>
