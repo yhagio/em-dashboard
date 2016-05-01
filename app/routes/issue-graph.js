@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   model() {
     // return $.getJSON('/data/issues.json');
     return Em.RSVP.hash({
-      customers: $.getJSON('/data/customers.json')
+      customers: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/customers.json')
                   .then((data) => {
 
                     setTimeout(() => {
@@ -14,7 +14,7 @@ export default Ember.Route.extend({
                     return data;
                   }),
 
-      issues: $.getJSON('/data/issues.json')
+      issues: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/issues.json')
                 .then((data) => {
 
                   setTimeout(() => {

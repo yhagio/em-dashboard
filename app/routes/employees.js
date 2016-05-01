@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model() {
 
-    return $.get('/data/employees.csv')
+    return $.get('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/employees.csv')
             .then((data) => {
               let jsonData = csvJSON(data);
               
