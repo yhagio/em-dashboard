@@ -66,6 +66,10 @@ html, body {
   max-width: 1080px;
 }
 
+.demo-navigation .mdl-navigation__link .material-icons {
+  margin: 0 10px 0 0;
+}
+
 
 /* Home */
 
