@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-    // return $.getJSON('/data/issues.json');
     return Em.RSVP.hash({
       customers: $.getJSON('/data/customers.json')
                   .then((data) => {
@@ -92,6 +91,9 @@ function createLineChart (data) {
 
     chart.draw(data, options);
   }
+  $(window).resize(function(){
+    drawChart();
+  });
 }
 
 // Open or Closed status of issues
@@ -125,4 +127,7 @@ function createBarChart (data) {
     var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
     chart.draw(view, options);
   }
+  $(window).resize(function(){
+    drawChart();
+  });
 }
