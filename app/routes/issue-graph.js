@@ -50,19 +50,24 @@ function countNumOfAMonth (signupDate, total) {
 // Customer Aquisition Line Chart of each month
 function createLineChart (data) {
   let customerNumbers = 0;
-  
   let total = Array(12).fill(0);
   let monthNumArray = [];
 
+  // Count number of signups of each month
   data.forEach((d) => {
     monthNumArray = countNumOfAMonth(d.signup_date, total);
   });
+
+  // Accumulate number of signups each month
+  for (let i = 1; 12 > i; i++) {
+    monthNumArray[i] += monthNumArray[i-1];
+  }
 
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ['Year', 'Signups'],
+      ['Year', 'Total Signups'],
       ['Jan',  monthNumArray[0]],
       ['Feb',  monthNumArray[1]],
       ['Mar',  monthNumArray[2]],
@@ -78,7 +83,7 @@ function createLineChart (data) {
     ]);
 
     var options = {
-      title: 'Customer Aquisition Per Month in 2015',
+      title: 'Total Customer Sinups in 2015',
       curveType: 'function',
       legend: { position: 'bottom' }
     };
@@ -89,6 +94,7 @@ function createLineChart (data) {
   }
 }
 
+// Open or Closed status of issues
 function createBarChart (data) {
 
 }
