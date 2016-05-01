@@ -1,5 +1,7 @@
 # Ember-dashboard
 
+![Screenshot](/screenshot.png)
+
 #### [DEMO](http://yhagio.github.io/em-dashboard/dist)
 
 ### Project Description / Requirements
