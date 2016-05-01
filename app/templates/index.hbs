@@ -1,25 +1,93 @@
-{{ top-bar title=model.title }}
+{{ top-bar title='Home' }}
 
 <main class="mdl-layout__content mdl-color--grey-100">
   <div class="mdl-grid demo-content">
   
     <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+
       <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">80<tspan font-size="0.2" dy="-0.07">%</tspan></text>
+        <text 
+          x="0.25"
+          y="0.2"
+          font-size="0.1"
+          fill="#888"
+          dy="0.1">Open Issues</text>
+        <text 
+          x="0.5"
+          y="0.6"
+          font-family="Roboto"
+          font-size="0.3"
+          fill="#888"
+          text-anchor="middle"
+          dy="0.1">
+          {{ model.issues.open_issues.length }}
+        </text>
       </svg>
+
       <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">81<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+        <text 
+          x="0.2"
+          y="0.2"
+          font-size="0.1"
+          fill="#888"
+          dy="0.1">Closed Issues</text>
+        <text 
+          x="0.5"
+          y="0.6"
+          font-family="Roboto"
+          font-size="0.3"
+          fill="#888"
+          text-anchor="middle"
+          dy="0.1">
+          {{ model.issues.closed_issues.length }}
+        </text>
       </svg>
+
       <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">82<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+        <text 
+          x="0.1"
+          y="0.2"
+          font-size="0.1"
+          fill="#888"
+          dy="0.1">Total Customers</text>
+        <text 
+          x="0.5"
+          y="0.6"
+          font-family="Roboto"
+          font-size="0.3"
+          fill="#888"
+          text-anchor="middle"
+          dy="0.1">
+          {{ model.customers.length }}
+        </text>
       </svg>
+
       <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888" text-anchor="middle" dy="0.1">83<tspan dy="-0.07" font-size="0.2">%</tspan></text>
+        <text 
+          x="0.1"
+          y="0.2"
+          font-size="0.1"
+          fill="#888"
+          dy="0.1">Total Employees</text>
+        <text 
+          x="0.5"
+          y="0.6"
+          font-family="Roboto"
+          font-size="0.3"
+          fill="#888"
+          text-anchor="middle"
+          dy="0.1">
+          {{ model.employees.length }}
+        </text>
       </svg>
+
     </div>
 
-    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-      <h3>Graph</h3>
+    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="text-align: center">
+      <div id="curve_chart_home" class="chart"></div>
+      <hr /> 
+      <p><strong>Employee Locations</strong></p>
+      <div id='map-canvas_home'></div>
     </div>
 
     <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
@@ -29,7 +97,7 @@
           <h2 class="mdl-card__title-text">Updates</h2>
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae sint neque sapiente corrupti reprehenderit quaerat necessitatibus ab, quasi, natus nemo non consequatur, eveniet voluptatem labore molestiae et autem soluta voluptatibus.
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
@@ -40,39 +108,27 @@
 
       <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-          <h3>View options</h3>
+          <h3>Office Location</h3>
           <ul>
             <li>
-              <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-                <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">Click per object</span>
-              </label>
+              San Francisco
             </li>
             <li>
-              <label for="chkbox2" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-                <input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">Views per object</span>
-              </label>
+              Orlando
             </li>
             <li>
-              <label for="chkbox3" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-                <input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">Objects selected</span>
-              </label>
+              Boston
             </li>
             <li>
-              <label for="chkbox4" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-                <input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">Objects viewed</span>
-              </label>
+              Chicago
             </li>
           </ul>
         </div>
 
-        <div class="mdl-card__actions mdl-card--border">
-          <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Change location</a>
+        <div class="mdl-card__actions mdl-card--border" style="padding: 0 0 10px 20px;">
+          <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Upcoming office</a>
           <div class="mdl-layout-spacer"></div>
-          <i class="material-icons">location_on</i>
+          <i class="material-icons">location_on</i><span>Montreal</span>
         </div>
       </div>
 
