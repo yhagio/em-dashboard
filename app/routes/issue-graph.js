@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model() {
     return Em.RSVP.hash({
-      customers: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/customers.json')
+      customers: $.getJSON('./data/customers.json')
                   .then((data) => {
 
                     setTimeout(() => {
@@ -13,7 +13,7 @@ export default Ember.Route.extend({
                     return data;
                   }),
 
-      issues: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/issues.json')
+      issues: $.getJSON('./data/issues.json')
                 .then((data) => {
 
                   setTimeout(() => {

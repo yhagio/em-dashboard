@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model() {
     return Em.RSVP.hash({
-      employees: $.get('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/employees.csv')
+      employees: $.get('./data/employees.csv')
                   .then((data) => {
                     let jsonData = csvJSON(data);
                     
@@ -14,7 +14,7 @@ export default Ember.Route.extend({
                     return jsonData;
                   }),
 
-      customers: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/customers.json')
+      customers: $.getJSON('./data/customers.json')
                   .then((data) => {
                     
                     setTimeout(() => {
@@ -24,7 +24,7 @@ export default Ember.Route.extend({
                     return data;
                   }),
 
-      issues: $.getJSON('https://raw.githubusercontent.com/yhagio/em-dashboard/gh-pages/dist/data/issues.json')
+      issues: $.getJSON('./data/issues.json')
                 .then((data) => {
 
                   let open_issues = data.filter((d) => {
@@ -118,7 +118,7 @@ function createLineChart (data) {
 
     chart.draw(data, options);
   }
-  $(window).resize(function(){
+  $(window).resize(function(){ 
     drawChart();
   });
 }
@@ -138,8 +138,6 @@ function createGeoView (jsonData) {
   });
 
   google.charts.setOnLoadCallback(drawMap);
-  google.charts.setOnLoadCallback(drawChart);
-
 
   // Draw Geographic Map Chart of Employees
   function drawMap() {

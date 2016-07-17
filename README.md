@@ -4,6 +4,14 @@
 
 #### [DEMO](http://yhagio.github.io/em-dashboard/dist)
 
+### To run locally
+```
+git clone git@github.com:yhagio/em-dashboard.git emd
+cd emd
+npm install
+npm run start
+```
+
 ### Project Description / Requirements
 
 The dashboard application must contain:
@@ -86,3 +94,7 @@ bower install --save material-design-lite
 Isseu 1:
 - Problem: http://stackoverflow.com/questions/31492069/material-design-lite-inputs-in-ember-js-app-loses-it-design-after-route-transiti
 - Solution: Not to use javascript animations from libraries since not needed
+
+
+#### Issues
+- [Google Maps API warning on Geochart](https://github.com/google/google-visualization-issues/issues/2292)
