@@ -2,13 +2,12 @@
 
 ![Screenshot](/screenshot.png)
 
-#### [DEMO](http://yhagio.github.io/em-dashboard/dist)
-
 ### To run locally
 ```
 git clone git@github.com:yhagio/em-dashboard.git emd
 cd emd
 npm install
+bower install
 npm run start
 ```
 
@@ -85,6 +84,7 @@ Data Views (Issues) Spreadsheet-like
 - https://www.mockaroo.com/
 - http://www.jarrodctaylor.com/posts/Filter-And-Sort-Tables-In-Ember/
 - https://www.freshdesignweb.com/free-bootstrap-admin-templates/
+
 - https://developers.google.com/chart/interactive/docs/gallery/geomap
 
 ```
@@ -102,3 +102,4 @@ Isseu 1:
 
 #### Update
 - Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
+- Use Google Map for Emplyee locations isntead of using Google Chart Geo Map since it does not support mobile web browser (Android with Chrome)

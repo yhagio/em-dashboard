@@ -124,36 +124,65 @@ function createLineChart (data) {
 
 // Geogrpahic Location Map of branch offices
 function createGeoView (jsonData) {
-  let boston = 0;
-  let sanfran = 0;
-  let orlando = 0;
-  let chicago = 0;
+  let boston_num = 0;
+  let sanfran_num = 0;
+  let orlando_num = 0;
+  let chicago_num = 0;
 
   jsonData.forEach((employee) => {
-    (employee.location === 'Boston') ? boston++ : null;
-    (employee.location === 'San Francisco') ? sanfran++ : null;
-    (employee.location === 'Chicago') ? chicago++ : null;
-    (employee.location === 'Orlando') ? orlando++ : null;
+    (employee.location === 'Boston') ? boston_num++ : null;
+    (employee.location === 'San Francisco') ? sanfran_num++ : null;
+    (employee.location === 'Chicago') ? chicago_num++ : null;
+    (employee.location === 'Orlando') ? orlando_num++ : null;
   });
 
-  google.charts.setOnLoadCallback(drawMap);
+  setTimeout(() => {
+    let bounds = new google.maps.LatLngBounds();
+    const USA = {lat: 37.09024, lng: -95.712891};
+    const map = new google.maps.Map(document.getElementById("map-canvas_home"), {
+      zoom: 3,
+      center: USA
+    });
 
-  // Draw Geographic Map Chart of Employees
-  function drawMap() {
-    var data = google.visualization.arrayToDataTable([
-      ['City', 'Number of Employees'],
-      ['Boston', boston],
-      ['Orlando', orlando],
-      ['Chicago', chicago],
-      ['San Francisco', sanfran]
-    ]);
+    // Markers array
+    const markers = [
+      ['Boston', boston_num, 42.3135417, -71.1975856],
+      ['Chicago', chicago_num, 41.8339026, -88.0130316],
+      ['San Francisco', sanfran_num, 37.7578149, -122.507812],
+      ['Orlando', orlando_num, 28.4813986, -81.5091802]
+    ];
 
-    var options = {};
-    options['region'] = 'US';
-    options['colors'] = [0xFF8747, 0xFFB581, 0xc06000];
-    options['dataMode'] = 'markers';
-    var geomap = new google.visualization.GeoMap(document.getElementById('map-canvas_home'));
-    geomap.draw(data, options);
-  }
+    // Info Content array of each marker
+    function infoWindowContent(name, num) {
+      return `<div class="markerInfo"><h5>${name}</h5><p>Number of employees: ${num}</p></div>`;
+    };
 
+    // Display multiple markers on a map
+    let infoWindow = new google.maps.InfoWindow();
+    let marker;
+
+    for (let i = 0; markers.length > i; i++) {
+      let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
+      bounds.extend(position);
+
+      // Setting each marker location
+      marker = new google.maps.Marker({
+        position,
+        map,
+        title: markers[i][0]
+      });
+
+      // Setting each marker's info window
+      google.maps.event.addListener(marker, 'click', ((marker, i) => {
+        return () => {
+          infoWindow.setContent(infoWindowContent(markers[i][0], markers[i][1]));
+          infoWindow.open(map, marker);
+        }
+      })(marker, i));
+
+      // Automatically center the map fitting all markers on the screen
+      map.fitBounds(bounds);
+    }
+
+  }, 300); // ** For avoiding failing to find the element to attach the map, wait 300ms
 }

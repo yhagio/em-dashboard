@@ -17,13 +17,16 @@
   </head>
   <body>
     {{content-for "body"}}
-    
+    {{content-for "body-footer"}}
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
-
     <script src="assets/vendor.js"></script>
     <script src="assets/em-dashboard.js"></script>
 
-    {{content-for "body-footer"}}
+    <script>
+      window.initMap = () => console.log('Google Map callback');
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEtol-8S6xwvD5rICyAcKBHmsg95J0Uso&callback=initMap"></script>
   </body>
 </html>

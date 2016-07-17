@@ -112,6 +112,14 @@ html, body {
   min-height: 300px;
 }
 
+/* geo map styling */
+.us-map-area {
+  min-width: 300px;
+  /*max-width: 700px;*/
+  min-height: 300px;
+}
+
+
 @media (max-width: 630px) {
   .chart { 
     width: 100%;
