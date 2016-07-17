@@ -119,6 +119,18 @@ html, body {
   min-height: 300px;
 }
 
+.employee-loc-title {
+  /*margin: 20px;*/
+  text-align: center;
+}
+
+.employee-map-area {
+  text-align: center;
+  min-width: 300px;
+  min-height: 350px;
+  margin-bottom: 40px;
+}
+
 
 @media (max-width: 630px) {
   .chart { 
