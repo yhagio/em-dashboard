@@ -98,3 +98,6 @@ Isseu 1:
 
 #### Issues
 - [Google Maps API warning on Geochart](https://github.com/google/google-visualization-issues/issues/2292)
+
+#### Update
+- Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
