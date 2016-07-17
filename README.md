@@ -103,3 +103,4 @@ Isseu 1:
 #### Update
 - Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
 - Use Google Map for Emplyee locations isntead of using Google Chart Geo Map since it does not support mobile web browser (Android with Chrome)
+- Minimize assets by running `ember build --prod`
