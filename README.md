@@ -96,8 +96,9 @@ Isseu 1:
 - Solution: Not to use javascript animations from libraries since not needed
 
 
-#### Issues
+#### Known Issues
 - [Google Maps API warning on Geochart](https://github.com/google/google-visualization-issues/issues/2292)
+- Geomap does not work on mobile web browser
 
 #### Update
 - Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
