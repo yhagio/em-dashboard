@@ -2,6 +2,10 @@ html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 
+svg text {
+  z-index: 20000;
+}
+
 .demo-layout .demo-header .mdl-textfield {
   padding: 0px;
   margin-top: 41px;

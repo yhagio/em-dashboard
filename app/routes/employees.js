@@ -2,20 +2,34 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
+    // Initial Load
+    $.get('./data/employees.csv')
+        .then((data) => {
+          let jsonData = csvJSON(data);
+          
+          // Display Employee Geospatial View:
+          // To avoid `document.getElementById('map-canvas')`
+          // return 'null' delay it by 100 milliseconds
+          setTimeout(() => {
+            createGeoView(jsonData);
+          }, 100);
+          
+          return jsonData;
+        });
 
-    return $.get('./data/employees.csv')
-            .then((data) => {
-              let jsonData = csvJSON(data);
-              
-              // Display Employee Geospatial View:
-              // To avoid `document.getElementById('map-canvas')`
-              // return 'null' delay it by 100 milliseconds
-              setTimeout(() => {
-                createGeoView(jsonData);
-              }, 100);
-              
-              return jsonData;
-            });
+    // POLLING: Fetch new data every hour
+    setInterval(function(){
+      return $.get('./data/employees.csv')
+              .then((data) => {
+                let jsonData = csvJSON(data);
+
+                setTimeout(() => {
+                  createGeoView(jsonData);
+                }, 100);
+                
+                return jsonData;
+              });
+    }, 1000 * 60 * 60);
   }
 });
 

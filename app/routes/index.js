@@ -3,40 +3,9 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model() {
     return Em.RSVP.hash({
-      employees: $.get('./data/employees.csv')
-                  .then((data) => {
-                    let jsonData = csvJSON(data);
-                    
-                    setTimeout(() => {
-                      createGeoView(jsonData);
-                    }, 100);
-
-                    return jsonData;
-                  }),
-
-      customers: $.getJSON('./data/customers.json')
-                  .then((data) => {
-                    
-                    setTimeout(() => {
-                      createLineChart(data);
-                    }, 100);
-
-                    return data;
-                  }),
-
-      issues: $.getJSON('./data/issues.json')
-                .then((data) => {
-
-                  let open_issues = data.filter((d) => {
-                    return d.status_open === true;
-                  });
-                  
-                  let closed_issues = data.filter((d) => {
-                    return d.status_open === false;
-                  });
-
-                  return { data, open_issues, closed_issues };
-                })
+      employees: fetchEmployees(),
+      customers: fetchCustoemrs(),
+      issues: issues()
     });
   }
 });
@@ -56,7 +25,6 @@ function csvJSON (csv) {
   }
   return result; //JavaScript object
 }
-
 
 // Count the number of customer signups of each month
 function countNumOfAMonth (signupDate, total) {
@@ -185,4 +153,110 @@ function createGeoView (jsonData) {
     }
 
   }, 300); // ** For avoiding failing to find the element to attach the map, wait 300ms
+}
+
+// Fetch employees data and display the number
+function fetchEmployees() {
+  $.get('./data/employees.csv')
+    .then((data) => {
+      let jsonData = csvJSON(data);
+      
+      setTimeout(() => {
+        $('#emp-size').text(jsonData.length);
+        createGeoView(jsonData);
+      }, 100);
+      return jsonData;
+    });
+  
+  // POLLING: Fetch new data every hour
+  setInterval(() => {
+    $.get('./data/employees.csv')
+      .then((data) => {
+        let jsonData = csvJSON(data);
+        
+        setTimeout(() => {
+          // $('#emp-size').text(jsonData.length);
+          var svgTextElement = document.getElementById("emp-size");
+          var textNode = svgTextElement.childNodes[0];
+          textNode.nodeValue = jsonData.length;
+
+          createGeoView(jsonData);
+        }, 200);
+        return jsonData;
+      });
+  },  1000 * 60 * 60);
+}
+
+// Fetch customers data and display the number
+function fetchCustoemrs() {
+  $.getJSON('./data/customers.json')
+    .then((data) => {
+      setTimeout(() => {
+        $('#cus-size').text(data.length);
+        createLineChart(data);
+      }, 200);
+      return data;
+    });
+
+  // POLLING: Fetch new data every hour
+  setInterval(() => {
+    return $.get('./data/customers.json')
+      .then((data) => {
+        setTimeout(() => {
+          // $('#cus-size').text(data.length);
+          var svgTextElement = document.getElementById("cus-size");
+          var textNode = svgTextElement.childNodes[0];
+          textNode.nodeValue = data.length;
+
+          createLineChart(data);
+        }, 100);
+
+        return data;
+      });
+  },  1000 * 60 * 60);
+}
+
+// Fetch issues data and display the number of closed and open issues
+function issues() {
+  $.getJSON('./data/issues.json')
+    .then((data) => {
+      let open_issues = data.filter((d) => {
+        return d.status_open === true;
+      });
+      
+      let closed_issues = data.filter((d) => {
+        return d.status_open === false;
+      });
+
+      $('#open-size').text(open_issues.length);
+      $('#closed-size').text(closed_issues.length);
+
+      return { data, open_issues, closed_issues };
+    });
+  
+  // POLLING: Fetch new data every hour
+  setInterval(() => {
+    return $.get('./data/issues.json')
+      .then((data) => {
+        let open_issues = data.filter((d) => {
+          return d.status_open === true;
+        });
+        
+        let closed_issues = data.filter((d) => {
+          return d.status_open === false;
+        });
+
+        // $('#open-size').text(open_issues.length);
+        // $('#closed-size').text(closed_issues.length);
+        var svgTextElement1 = document.getElementById("open-size");
+        var textNode1 = svgTextElement1.childNodes[0];
+        textNode1.nodeValue = open_issues.length;
+
+        var svgTextElement2 = document.getElementById("closed-size");
+        var textNode2 = svgTextElement2.childNodes[0];
+        textNode2.nodeValue = closed_issues.length;
+
+        return { data, open_issues, closed_issues };
+      });
+  },  1000 * 60 * 60);
 }

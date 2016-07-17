@@ -10,6 +10,10 @@ npm install
 bower install
 npm run start
 ```
+To minimize assets
+```
+npm run prod
+```
 
 ### Project Description / Requirements
 
@@ -104,3 +108,4 @@ Isseu 1:
 - Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
 - Use Google Map for Emplyee locations isntead of using Google Chart Geo Map since it does not support mobile web browser (Android with Chrome)
 - Minimize assets by running `ember build --prod`
+- Polling new data every hour, and update values
