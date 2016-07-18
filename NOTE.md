@@ -83,5 +83,19 @@ To run minimized files:
 
 Added column chart for total issues opened over time
 
-To
-- Polling new data every hour, and update values
+Polling Data
+```js
+  // Ember.run.later method version of fetching employees data every 3 seconds
+
+  Ember.run.later(this, function() {
+    this.model().then()
+        .then((data) => {
+          let jsonData = csvJSON(data);
+
+          setTimeout(() => {
+            createGeoView(jsonData);
+          }, 100);    
+        });
+  }, 3000);
+  return $.get('./data/employees.csv');
+```

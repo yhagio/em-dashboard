@@ -2,10 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
+
     // Initial Load
     $.get('./data/employees.csv')
         .then((data) => {
           let jsonData = csvJSON(data);
+          console.log('Initial Employee Data Loaded');
           
           // Display Employee Geospatial View:
           // To avoid `document.getElementById('map-canvas')`
@@ -17,10 +19,16 @@ export default Ember.Route.extend({
           return jsonData;
         });
 
-    // POLLING: Fetch new data every hour
-    setInterval(function(){
+    // Fetch new data every 3 seconds
+    // if route changes, it stops polling
+    let getHandleEmployeesData = function() {
+      if (window.location.pathname !== '/employees') {
+        return clearInterval(getHandleEmployeesData);
+      }
+
       return $.get('./data/employees.csv')
               .then((data) => {
+                console.log('Polling Employee Data');
                 let jsonData = csvJSON(data);
 
                 setTimeout(() => {
@@ -29,7 +37,10 @@ export default Ember.Route.extend({
                 
                 return jsonData;
               });
-    }, 1000 * 60 * 60);
+    };
+
+    setInterval(getHandleEmployeesData, 3000);
+
   }
 });
 
@@ -125,7 +136,7 @@ function createGeoView (jsonData) {
 
   // Draw Donut Chart of Employees
   function drawChart() {
-    var data = google.visualization.arrayToDataTable([
+    let data = google.visualization.arrayToDataTable([
       ['City', 'Number of Employees'],
       ['Boston', boston],
       ['Orlando', orlando],
@@ -133,13 +144,13 @@ function createGeoView (jsonData) {
       ['San Francisco', sanfran]
     ]);
 
-    var options = {
+    let options = {
       title: 'Number & Percentage of Employees',
       pieHole: 0.5,
       pieSliceText: 'value'
     };
 
-    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    let chart = new google.visualization.PieChart(document.getElementById('donutchart'));
     chart.draw(data, options);
   }
 

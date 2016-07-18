@@ -160,7 +160,7 @@ function fetchEmployees() {
   $.get('./data/employees.csv')
     .then((data) => {
       let jsonData = csvJSON(data);
-      
+      console.log('Initial Employees Data Loaded');
       setTimeout(() => {
         $('#emp-size').text(jsonData.length);
         createGeoView(jsonData);
@@ -173,7 +173,7 @@ function fetchEmployees() {
     $.get('./data/employees.csv')
       .then((data) => {
         let jsonData = csvJSON(data);
-        
+        console.log('Polling Employees Data');
         setTimeout(() => {
           // $('#emp-size').text(jsonData.length);
           var svgTextElement = document.getElementById("emp-size");
@@ -184,13 +184,14 @@ function fetchEmployees() {
         }, 200);
         return jsonData;
       });
-  },  1000 * 60 * 60);
+  },  3000);
 }
 
 // Fetch customers data and display the number
 function fetchCustoemrs() {
   $.getJSON('./data/customers.json')
     .then((data) => {
+      console.log('Initial Customers Data Loaded');
       setTimeout(() => {
         $('#cus-size').text(data.length);
         createLineChart(data);
@@ -202,6 +203,7 @@ function fetchCustoemrs() {
   setInterval(() => {
     return $.get('./data/customers.json')
       .then((data) => {
+        console.log('Polling Customers Data');
         setTimeout(() => {
           // $('#cus-size').text(data.length);
           var svgTextElement = document.getElementById("cus-size");
@@ -213,13 +215,14 @@ function fetchCustoemrs() {
 
         return data;
       });
-  },  1000 * 60 * 60);
+  },  3000);
 }
 
 // Fetch issues data and display the number of closed and open issues
 function issues() {
   $.getJSON('./data/issues.json')
     .then((data) => {
+      console.log('Initial Issues Data Loaded');
       let open_issues = data.filter((d) => {
         return d.status_open === true;
       });
@@ -238,6 +241,7 @@ function issues() {
   setInterval(() => {
     return $.get('./data/issues.json')
       .then((data) => {
+        console.log('Polling Issues Data');
         let open_issues = data.filter((d) => {
           return d.status_open === true;
         });
@@ -258,5 +262,5 @@ function issues() {
 
         return { data, open_issues, closed_issues };
       });
-  },  1000 * 60 * 60);
+  }, 3000);
 }
