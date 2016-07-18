@@ -18,6 +18,7 @@ export default Ember.Route.extend({
 
                   setTimeout(() => {
                     createBarChart(data);
+                    createIssueChart(data);
                   }, 100);
 
                   return data;
@@ -48,7 +49,6 @@ function countNumOfAMonth (signupDate, total) {
 
 // Customer Aquisition Line Chart of each month
 function createLineChart (data) {
-  let customerNumbers = 0;
   let total = Array(12).fill(0);
   let monthNumArray = [];
 
@@ -66,7 +66,7 @@ function createLineChart (data) {
 
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ['Year', 'Total Signups'],
+      ['Year', 'Total Paid Customers'],
       ['Jan',  monthNumArray[0]],
       ['Feb',  monthNumArray[1]],
       ['Mar',  monthNumArray[2]],
@@ -82,7 +82,7 @@ function createLineChart (data) {
     ]);
 
     var options = {
-      title: 'Total Customer Sinups in 2015',
+      title: 'Total Paid Customers in 2015',
       curveType: 'function',
       legend: { position: 'bottom' }
     };
@@ -96,7 +96,7 @@ function createLineChart (data) {
   });
 }
 
-// Open or Closed status of issues
+// Open or Closed status of issues of 2015
 function createBarChart (data) {
   let open = 0;
   let closed = 0;
@@ -121,7 +121,7 @@ function createBarChart (data) {
     var view = new google.visualization.DataView(data);
 
     var options = {
-      title: "Open / Closed Issue Status",
+      title: "Summary: Open / Closed Issue Status of 2015",
       legend: { position: "none" }
     };
     var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
@@ -129,5 +129,55 @@ function createBarChart (data) {
   }
   $(window).resize(function(){
     drawChart();
+  });
+}
+
+// A bar chart reflecting number of reported issues over a period of time
+// X axis: Time period
+// Y axis: Number of issues
+function createIssueChart (data) {
+  let total = Array(12).fill(0);
+  let monthNumArray = [];
+
+  // Count number of issues of each month
+  data.forEach((d) => {
+    monthNumArray = countNumOfAMonth(d.submitted_at, total);
+  });
+
+  // Accumulate number of issues each month
+  for (let i = 1; 12 > i; i++) {
+    monthNumArray[i] += monthNumArray[i-1];
+  }
+
+  google.charts.setOnLoadCallback(drawIssueChart);
+
+  function drawIssueChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year', 'Accumulated Total Opened Issues'],
+      ['Jan',  monthNumArray[0]],
+      ['Feb',  monthNumArray[1]],
+      ['Mar',  monthNumArray[2]],
+      ['Apr',  monthNumArray[3]],
+      ['May',  monthNumArray[4]],
+      ['Jun',  monthNumArray[5]],
+      ['Jul',  monthNumArray[6]],
+      ['Aug',  monthNumArray[7]],
+      ['Sep',  monthNumArray[8]],
+      ['Oct',  monthNumArray[9]],
+      ['Nov',  monthNumArray[10]],
+      ['Dec',  monthNumArray[11]]
+    ]);
+
+    var options = {
+      title: 'Accumulated opened issues over time in 2015',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('issue_chart'));
+
+    chart.draw(data, options);
+  }
+  $(window).resize(function(){
+    drawIssueChart();
   });
 }
