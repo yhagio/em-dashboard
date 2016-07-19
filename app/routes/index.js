@@ -7,7 +7,7 @@ export default Ember.Route.extend({
       customers: fetchCustoemrs(),
       issues: issues()
     });
-  },
+  }
 
   // setupController(controller, models) {
   //   controller.set('employees', models.employees);
@@ -208,11 +208,11 @@ function fetchEmployees() {
         // To avoid `document.getElementById('map-canvas')`
         // return 'null' delay it by 100 milliseconds
         setTimeout(() => {
-          $('#emp-size').text(jsonData.length);
+          // $('#emp-size').text(jsonData.length);
 
-          // let svgTextElement = document.getElementById("emp-size");
-          // let textNode = svgTextElement.childNodes[0];
-          // textNode.nodeValue = jsonData.length;
+          let svgTextElement = document.getElementById("emp-size");
+          let textNode = svgTextElement.childNodes[0];
+          textNode.nodeValue = jsonData.length;
 
           createGeoView(jsonData);
         }, 300);
@@ -396,10 +396,6 @@ function issues() {
 
           $('#open-size').text(open_issues.length);
           $('#closed-size').text(closed_issues.length);
-
-
-          // createBarChart(data);
-          // createIssueChart(data);
           
           return { data, open_issues, closed_issues };
         }, 100);
@@ -438,8 +434,6 @@ function issues() {
                     let textNode2 = svgTextElement2.childNodes[0];
                     textNode2.nodeValue = closed_issues.length + i; i++;
 
-                    // createBarChart(data);
-                    // createIssueChart(data);
                   }, 100);
                   
                   return data;

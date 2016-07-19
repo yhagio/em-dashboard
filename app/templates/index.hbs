@@ -2,89 +2,36 @@
 
 <main class="mdl-layout__content mdl-color--grey-100">
   <div class="mdl-grid demo-content">
-  
+
     <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
 
-      <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text 
-          x="0.25"
-          y="0.2"
-          font-size="0.1"
-          fill="#888"
-          dy="0.1">Open Issues</text>
-        <text 
-          x="0.5"
-          y="0.6"
-          font-family="Roboto"
-          font-size="0.3"
-          fill="#888"
-          text-anchor="middle"
-          dy="0.1"
-          id="open-size">
+      <div width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
+        <p class="stats-title">Open Issues</p>
+        <p id="open-size" class="stats-number">
           {{ model.issues.open_issues.length }}
-        </text>
-      </svg>
+        </p>
+      </div>
 
-      <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text 
-          x="0.2"
-          y="0.2"
-          font-size="0.1"
-          fill="#888"
-          dy="0.1">Closed Issues</text>
-        <text 
-          x="0.5"
-          y="0.6"
-          font-family="Roboto"
-          font-size="0.3"
-          fill="#888"
-          text-anchor="middle"
-          dy="0.1"
-          id="closed-size">
+      <div width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
+        <p class="stats-title">Closed Issues</p>
+        <p id="closed-size" class="stats-number">
           {{ model.issues.closed_issues.length }}
-        </text>
-      </svg>
+        </p>
+      </div>
 
-      <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text 
-          x="0.1"
-          y="0.2"
-          font-size="0.1"
-          fill="#888"
-          dy="0.1">Total Customers</text>
-        <text 
-          x="0.5"
-          y="0.6"
-          font-family="Roboto"
-          font-size="0.3"
-          fill="#888"
-          text-anchor="middle"
-          dy="0.1"
-          id="cus-size">
+      <div width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
+        <p class="stats-title">Total Customers</p>
+        <p id="cus-size" class="stats-number">
           {{ model.customers.length }}
-        </text>
-      </svg>
+        </p>
+      </div>
 
-      <svg width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
-        <text 
-          x="0.1"
-          y="0.2"
-          font-size="0.1"
-          fill="#888"
-          dy="0.1">Total Employees</text>
-        <text 
-          x="0.5"
-          y="0.6"
-          font-family="Roboto"
-          font-size="0.3"
-          fill="#888"
-          text-anchor="middle"
-          dy="0.1"
-          id="emp-size"
-          >
+      <div width="200px" height="200px" viewBox="0 0 1 1" class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop home-stat">
+        <p class="stats-title">Total Employees</p>
+        <p id="emp-size" class="stats-number">
           {{ model.employees.length }}
-        </text>
-      </svg>
+        </p>
+      </div>
     </div>
 
     <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col" style="text-align: center">
