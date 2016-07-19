@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "ember build",
-    "prod": "ember build --prod",
+    "prod": "ember build --prod && cd dist && http-server",
     "start": "ember server",
     "test": "ember test"
   },
@@ -39,6 +39,7 @@
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "ember-welcome-page": "^1.0.1",
+    "http-server": "^0.9.0",
     "loader.js": "^4.0.1"
   }
 }

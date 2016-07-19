@@ -1,8 +1,15 @@
 # Ember-dashboard
 
+Corporate dashboard built with Ember.js with Material Design Lite.
+
+**Features**
+- Responsive working in Desktop & Mobile browser
+- Visualization with Google Chart & Google Map
+- Fetching JSON and CSV files for data source periodically
+
 ![Screenshot](/screenshot.png)
 
-### To run locally (development)
+#### To run locally (development)
 ```
 git clone git@github.com:yhagio/em-dashboard.git emd
 cd emd
@@ -10,18 +17,13 @@ npm install
 bower install
 npm run start
 ```
-To minimize assets
+#### To run production version (miniized assets)
 ```
 npm run prod
 ```
+and go to `http://127.0.0.1:8080/` in web browser.
 
 ---
-### Built with
-- Ember.js 
-- Material Design Lite
-
----
-
 
 ### Resources & Inspirations
 - https://guides.emberjs.com/v2.5.0/

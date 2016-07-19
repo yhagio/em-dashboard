@@ -79,7 +79,7 @@ Enabled Responsiveness of Table:
 - Responsive table with this technique :[Responsive table tricks](https://css-tricks.com/responsive-data-tables/)
 
 To run minimized files:
-- Minimize assets by running `ember build --prod`
+- Minimize assets by running `ember build --prod` with help of `http-server` module
 
 Added column chart for total issues opened over time
 
