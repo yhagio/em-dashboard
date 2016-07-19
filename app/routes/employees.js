@@ -2,12 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-
+    
     // Initial Load
     $.get('./data/employees.csv')
         .then((data) => {
           let jsonData = csvJSON(data);
-          console.log('Initial Employee Data Loaded');
+          console.log('Initial employees data Loaded');
           
           // Display Employee Geospatial View:
           // To avoid `document.getElementById('map-canvas')`
@@ -23,12 +23,13 @@ export default Ember.Route.extend({
     // if route changes, it stops polling
     let getHandleEmployeesData = function() {
       if (window.location.pathname !== '/employees') {
+        console.log('Cancelled polling employees data');
         return clearInterval(getHandleEmployeesData);
       }
 
       return $.get('./data/employees.csv')
               .then((data) => {
-                console.log('Polling Employee Data');
+                console.log('Polling employees data');
                 let jsonData = csvJSON(data);
 
                 setTimeout(() => {
@@ -40,6 +41,25 @@ export default Ember.Route.extend({
     };
 
     setInterval(getHandleEmployeesData, 3000);
+    
+
+
+
+    // let pollEmployees = Ember.run.later(this, function() {
+    //   this.model().then()
+    //       .then(function(data) {
+    //         console.log('!Polling Employee data!');
+    //         let jsonData = csvJSON(data);
+    //         createGeoView(jsonData);
+    //         // this.controller.set('model', jsonData);
+            
+    //       }.bind(this));
+    // }, 3000);
+    // if (window.location.pathname !== '/employees') {
+    //   console.log('Cancelled Employees');
+    //   Ember.run.cancel(pollEmployees);
+    // }
+    // return Ember.$.get('./data/employees.csv');
 
   }
 });
