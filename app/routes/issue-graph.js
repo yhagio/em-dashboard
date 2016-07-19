@@ -3,26 +3,28 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model() {
     return Em.RSVP.hash({
-      customers: $.getJSON('./data/customers.json')
-                  .then((data) => {
+      customers: fetchCustomers(),
+      // $.getJSON('./data/customers.json')
+      //             .then((data) => {
 
-                    setTimeout(() => {
-                      createLineChart(data);
-                    }, 100);
+      //               setTimeout(() => {
+      //                 createLineChart(data);
+      //               }, 100);
 
-                    return data;
-                  }),
+      //               return data;
+      //             }),
 
-      issues: $.getJSON('./data/issues.json')
-                .then((data) => {
+      issues: fetchIssues()
+      // $.getJSON('./data/issues.json')
+      //           .then((data) => {
 
-                  setTimeout(() => {
-                    createBarChart(data);
-                    createIssueChart(data);
-                  }, 100);
+      //             setTimeout(() => {
+      //               createBarChart(data);
+      //               createIssueChart(data);
+      //             }, 100);
 
-                  return data;
-                })
+      //             return data;
+      //           })
     });
   }
 });
@@ -180,4 +182,87 @@ function createIssueChart (data) {
   $(window).resize(function(){
     drawIssueChart();
   });
+}
+
+
+function fetchCustomers() {
+  // Initial Load
+  $.getJSON('./data/customers.json')
+      .then((data) => {
+        console.log('Initial customers data Loaded');
+
+        // Display Line Chart:
+        // To avoid `document.getElementById()`
+        // return 'null' delay it by 100 milliseconds
+        setTimeout(() => {
+          createLineChart(data);
+        }, 100);
+        
+        return data;
+      });
+
+  // Fetch new data every 3 seconds
+  // if route changes, it stops polling
+  let getHandleCustomersData = function() {
+    setTimeout(() => { // Make sure route changed if changed
+      if (window.location.pathname !== '/issue-graph') {
+        console.log('Cancelled polling customers data');
+        clearInterval(looping);
+      } else {
+        return $.getJSON('./data/customers.json')
+                .then((data) => {
+                  console.log('Polling customers data');
+
+                  setTimeout(() => {
+                    createLineChart(data);
+                  }, 100);
+                  
+                  return data;
+                });
+      }
+    }, 100);
+  };
+  let looping = setInterval(getHandleCustomersData, 3000);
+}
+
+function fetchIssues() {
+  // Initial Load
+  $.getJSON('./data/issues.json')
+      .then((data) => {
+        console.log('Initial issues data Loaded');
+
+        // Display Line Chart:
+        // To avoid `document.getElementById()`
+        // return 'null' delay it by 100 milliseconds
+        setTimeout(() => {
+          createBarChart(data);
+          createIssueChart(data);
+        }, 100);
+        
+        return data;
+      });
+
+  // Fetch new data every 3 seconds
+  // if route changes, it stops polling
+  let getHandleIssuesData = function() {
+    setTimeout(() => { // Make sure route changed if changed
+      if (window.location.pathname !== '/issue-graph') {
+        console.log('Cancelled polling issues data');
+        clearInterval(looping);
+      } else {
+        return $.getJSON('./data/issues.json')
+                .then((data) => {
+                  console.log('Polling issues data');
+
+                  setTimeout(() => {
+                    createBarChart(data);
+                    createIssueChart(data);
+                  }, 100);
+                  
+                  return data;
+                });
+      }
+    }, 100);
+  };
+  let looping = setInterval(getHandleIssuesData, 3000);
 }

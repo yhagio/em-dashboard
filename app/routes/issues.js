@@ -29,19 +29,19 @@ export default Ember.Route.extend({
     let pollIssues = Ember.run.later(this, function() {
       this.model().then()
           .then(function(data) {
-            console.log('Polling issues data');
             this.controller.set('model', data);
+            console.log('Polling issues data');
           }.bind(this));
     }, 3000);
 
     // Cancel polling issues data when route changes, but
-    // make delay it 300ms make sure to route changed before cancelling it
+    // make delay it 100ms make sure to route changed before cancelling it
     setTimeout(() => {
       if (window.location.pathname !== '/issues') {
         console.log('Cancelled polling issues data');
         Ember.run.cancel(pollIssues);
       }
-    }, 300);
+    }, 100);
 
     return Ember.$.get('./data/issues.json');
 
