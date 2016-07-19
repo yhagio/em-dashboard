@@ -7,7 +7,13 @@ export default Ember.Route.extend({
       customers: fetchCustoemrs(),
       issues: issues()
     });
-  }
+  },
+
+  // setupController(controller, models) {
+  //   controller.set('employees', models.employees);
+  //   controller.set('customers', models.customers);
+  //   controller.set('issues', models.issues);
+  // }
 });
 
 function csvJSON (csv) {
@@ -157,110 +163,289 @@ function createGeoView (jsonData) {
 
 // Fetch employees data and display the number
 function fetchEmployees() {
-  $.get('./data/employees.csv')
-    .then((data) => {
-      let jsonData = csvJSON(data);
-      console.log('Initial Employees Data Loaded');
-      setTimeout(() => {
-        $('#emp-size').text(jsonData.length);
-        createGeoView(jsonData);
-      }, 100);
-      return jsonData;
-    });
+  // Version 1
+
+  // $.get('./data/employees.csv')
+  //   .then((data) => {
+  //     let jsonData = csvJSON(data);
+  //     console.log('Initial Employees Data Loaded');
+  //     setTimeout(() => {
+  //       $('#emp-size').text(jsonData.length);
+  //       createGeoView(jsonData);
+  //     }, 100);
+  //     return jsonData;
+  //   });
   
-  // POLLING: Fetch new data every hour
-  setInterval(() => {
-    $.get('./data/employees.csv')
+  // // POLLING: Fetch new data every hour
+  // setInterval(() => {
+  //   $.get('./data/employees.csv')
+  //     .then((data) => {
+  //       let jsonData = csvJSON(data);
+  //       console.log('Polling Employees Data');
+  //       setTimeout(() => {
+  //         // $('#emp-size').text(jsonData.length);
+  //         var svgTextElement = document.getElementById("emp-size");
+  //         var textNode = svgTextElement.childNodes[0];
+  //         textNode.nodeValue = jsonData.length;
+
+  //         createGeoView(jsonData);
+  //       }, 200);
+  //       return jsonData;
+  //     });
+  // },  3000);
+
+
+  // Version 2
+
+
+  // Initial Load
+  $.get('./data/employees.csv')
       .then((data) => {
         let jsonData = csvJSON(data);
-        console.log('Polling Employees Data');
+        console.log('Initial employees data Loaded');
+
+        // Display Employee Geospatial View:
+        // To avoid `document.getElementById('map-canvas')`
+        // return 'null' delay it by 100 milliseconds
         setTimeout(() => {
-          // $('#emp-size').text(jsonData.length);
-          var svgTextElement = document.getElementById("emp-size");
-          var textNode = svgTextElement.childNodes[0];
-          textNode.nodeValue = jsonData.length;
+          $('#emp-size').text(jsonData.length);
+
+          // let svgTextElement = document.getElementById("emp-size");
+          // let textNode = svgTextElement.childNodes[0];
+          // textNode.nodeValue = jsonData.length;
 
           createGeoView(jsonData);
-        }, 200);
+        }, 300);
+        
         return jsonData;
       });
-  },  3000);
+
+  // Fetch new data every 3 seconds
+  // if route changes, it stops polling
+  let i = 1;// ** just incrementing to see real time update for demo purpose
+
+  let getHandleEmployeesData = function() {
+    setTimeout(() => { // Make sure route changed if changed
+      if (window.location.pathname !== '/') {
+        console.log('Cancelled polling employees data');
+        clearInterval(looping);
+      } else {
+        return $.get('./data/employees.csv')
+                .then((data) => {
+                  console.log('Polling employees data');
+                  let jsonData = csvJSON(data);
+
+                  setTimeout(() => {
+                    let svgTextElement = document.getElementById("emp-size");
+                    let textNode = svgTextElement.childNodes[0];
+                    textNode.nodeValue = jsonData.length + i; i++; // **
+
+                    createGeoView(jsonData);
+                  }, 100);
+
+                  return jsonData;
+                });
+      }
+    }, 300);
+  };
+  let looping = setInterval(getHandleEmployeesData, 3000);
+  
+
 }
 
 // Fetch customers data and display the number
 function fetchCustoemrs() {
+  // $.getJSON('./data/customers.json')
+  //   .then((data) => {
+  //     console.log('Initial Customers Data Loaded');
+  //     setTimeout(() => {
+  //       $('#cus-size').text(data.length);
+  //       createLineChart(data);
+  //     }, 200);
+  //     return data;
+  //   });
+
+  // // POLLING: Fetch new data every hour
+  // setInterval(() => {
+  //   return $.get('./data/customers.json')
+  //     .then((data) => {
+  //       console.log('Polling Customers Data');
+  //       setTimeout(() => {
+  //         // $('#cus-size').text(data.length);
+  //         var svgTextElement = document.getElementById("cus-size");
+  //         var textNode = svgTextElement.childNodes[0];
+  //         textNode.nodeValue = data.length;
+
+  //         createLineChart(data);
+  //       }, 100);
+
+  //       return data;
+  //     });
+  // },  3000);
+
+
+  // Initial Load
   $.getJSON('./data/customers.json')
-    .then((data) => {
-      console.log('Initial Customers Data Loaded');
-      setTimeout(() => {
-        $('#cus-size').text(data.length);
-        createLineChart(data);
-      }, 200);
-      return data;
-    });
-
-  // POLLING: Fetch new data every hour
-  setInterval(() => {
-    return $.get('./data/customers.json')
       .then((data) => {
-        console.log('Polling Customers Data');
-        setTimeout(() => {
-          // $('#cus-size').text(data.length);
-          var svgTextElement = document.getElementById("cus-size");
-          var textNode = svgTextElement.childNodes[0];
-          textNode.nodeValue = data.length;
+        console.log('Initial customers data Loaded');
 
+        // Display Line Chart:
+        // To avoid `document.getElementById()`
+        // return 'null' delay it by 100 milliseconds
+        setTimeout(() => {
+          $('#cus-size').text(data.length);
           createLineChart(data);
         }, 100);
-
+        
         return data;
       });
-  },  3000);
+
+  // Fetch new data every 3 seconds
+  // if route changes, it stops polling
+  let i = 1;
+
+  let getHandleCustomersData = function() {
+    setTimeout(() => { // Make sure route changed if changed
+      if (window.location.pathname !== '/') {
+        console.log('Cancelled polling customers data');
+        clearInterval(looping);
+      } else {
+        return $.getJSON('./data/customers.json')
+                .then((data) => {
+                  console.log('Polling customers data');
+
+                  setTimeout(() => {
+                    var svgTextElement = document.getElementById("cus-size");
+                    var textNode = svgTextElement.childNodes[0];
+                    textNode.nodeValue = data.length + i; i++;
+
+                    createLineChart(data);
+                  }, 100);
+                  
+                  return data;
+                });
+      }
+    }, 100);
+  };
+  let looping = setInterval(getHandleCustomersData, 3000);
 }
 
 // Fetch issues data and display the number of closed and open issues
 function issues() {
-  $.getJSON('./data/issues.json')
-    .then((data) => {
-      console.log('Initial Issues Data Loaded');
-      let open_issues = data.filter((d) => {
-        return d.status_open === true;
-      });
+  // $.getJSON('./data/issues.json')
+  //   .then((data) => {
+  //     console.log('Initial Issues Data Loaded');
+  //     let open_issues = data.filter((d) => {
+  //       return d.status_open === true;
+  //     });
       
-      let closed_issues = data.filter((d) => {
-        return d.status_open === false;
-      });
+  //     let closed_issues = data.filter((d) => {
+  //       return d.status_open === false;
+  //     });
 
-      $('#open-size').text(open_issues.length);
-      $('#closed-size').text(closed_issues.length);
+  //     $('#open-size').text(open_issues.length);
+  //     $('#closed-size').text(closed_issues.length);
 
-      return { data, open_issues, closed_issues };
-    });
+  //     return { data, open_issues, closed_issues };
+  //   });
   
-  // POLLING: Fetch new data every hour
-  setInterval(() => {
-    return $.get('./data/issues.json')
-      .then((data) => {
-        console.log('Polling Issues Data');
-        let open_issues = data.filter((d) => {
-          return d.status_open === true;
-        });
+  // // POLLING: Fetch new data every hour
+  // setInterval(() => {
+  //   return $.get('./data/issues.json')
+  //     .then((data) => {
+  //       console.log('Polling Issues Data');
+  //       let open_issues = data.filter((d) => {
+  //         return d.status_open === true;
+  //       });
         
-        let closed_issues = data.filter((d) => {
-          return d.status_open === false;
-        });
+  //       let closed_issues = data.filter((d) => {
+  //         return d.status_open === false;
+  //       });
 
-        // $('#open-size').text(open_issues.length);
-        // $('#closed-size').text(closed_issues.length);
-        var svgTextElement1 = document.getElementById("open-size");
-        var textNode1 = svgTextElement1.childNodes[0];
-        textNode1.nodeValue = open_issues.length;
+  //       // $('#open-size').text(open_issues.length);
+  //       // $('#closed-size').text(closed_issues.length);
+        // var svgTextElement1 = document.getElementById("open-size");
+        // var textNode1 = svgTextElement1.childNodes[0];
+        // textNode1.nodeValue = open_issues.length;
 
-        var svgTextElement2 = document.getElementById("closed-size");
-        var textNode2 = svgTextElement2.childNodes[0];
-        textNode2.nodeValue = closed_issues.length;
+        // var svgTextElement2 = document.getElementById("closed-size");
+        // var textNode2 = svgTextElement2.childNodes[0];
+        // textNode2.nodeValue = closed_issues.length;
 
-        return { data, open_issues, closed_issues };
+  //       return { data, open_issues, closed_issues };
+  //     });
+  // }, 3000);
+
+
+  // Initial Load
+  $.getJSON('./data/issues.json')
+      .then((data) => {
+        console.log('Initial issues data Loaded');
+
+        // Display Line Chart:
+        // To avoid `document.getElementById()`
+        // return 'null' delay it by 100 milliseconds
+        setTimeout(() => {
+          let open_issues = data.filter((d) => {
+            return d.status_open === true;
+          });
+          
+          let closed_issues = data.filter((d) => {
+            return d.status_open === false;
+          });
+
+          $('#open-size').text(open_issues.length);
+          $('#closed-size').text(closed_issues.length);
+
+
+          // createBarChart(data);
+          // createIssueChart(data);
+          
+          return { data, open_issues, closed_issues };
+        }, 100);
+        
+        return data;
       });
-  }, 3000);
+
+  // Fetch new data every 3 seconds
+  // if route changes, it stops polling
+  let i = 1;
+
+  let getHandleIssuesData = function() {
+    setTimeout(() => { // Make sure route changed if changed
+      if (window.location.pathname !== '/') {
+        console.log('Cancelled polling issues data');
+        clearInterval(looping);
+      } else {
+        return $.getJSON('./data/issues.json')
+                .then((data) => {
+                  console.log('Polling issues data');
+
+                  setTimeout(() => {
+                    let open_issues = data.filter((d) => {
+                      return d.status_open === true;
+                    });
+                    
+                    let closed_issues = data.filter((d) => {
+                      return d.status_open === false;
+                    });
+
+                    let svgTextElement1 = document.getElementById("open-size");
+                    let textNode1 = svgTextElement1.childNodes[0];
+                    textNode1.nodeValue = open_issues.length - i; i++;
+
+                    let svgTextElement2 = document.getElementById("closed-size");
+                    let textNode2 = svgTextElement2.childNodes[0];
+                    textNode2.nodeValue = closed_issues.length + i; i++;
+
+                    // createBarChart(data);
+                    // createIssueChart(data);
+                  }, 100);
+                  
+                  return data;
+                });
+      }
+    }, 100);
+  };
+  let looping = setInterval(getHandleIssuesData, 3000);
 }
