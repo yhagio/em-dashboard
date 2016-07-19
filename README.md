@@ -17,6 +17,8 @@ npm install
 bower install
 npm run start
 ```
+and go to `http://localhost:4200/`
+
 #### To run production version (miniized assets)
 ```
 npm run prod
