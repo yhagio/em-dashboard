@@ -20,6 +20,7 @@ npm run start
 and go to `http://localhost:4200/`
 
 #### To run production version (miniized assets)
+run following command after installed npm and bower, instead of `npm run start`
 ```
 npm run prod
 ```
