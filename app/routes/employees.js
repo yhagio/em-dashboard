@@ -1,8 +1,8 @@
 import Ember from 'ember';
+import { csvJSON } from '../utils/helpers';
 
 export default Ember.Route.extend({
   model() {
-    
     // Initial Load
     $.get('./data/employees.csv')
         .then((data) => {
@@ -42,52 +42,9 @@ export default Ember.Route.extend({
       }, 100);
     };
     let looping = setInterval(getHandleEmployeesData, 3000);
-    
-
-    
-
-
-
-    // let pollEmployees = Ember.run.later(this, function() {
-    //   this.model().then()
-    //       .then(function(data) {
-    //         console.log('!Polling Employee data!');
-    //         this.controller.set('model', data);
-    //         let jsonData = csvJSON(data);
-    //         createGeoView(jsonData);
-    //         // this.controller.set('model', jsonData);
-            
-    //       }.bind(this));
-    // }, 3000);
-
-    // setTimeout(() => {
-    //   if (window.location.pathname !== '/employees') {
-    //     console.log('Cancelled Employees');
-    //     Ember.run.cancel(pollEmployees);
-    //   }
-    // }, 100);
-    
-    // return Ember.$.get('./data/employees.csv');
 
   }
 });
-
-
-function csvJSON (csv) {
-  let lines=csv.split("\n");
-  let result = [];
-  let headers=lines[0].split(",");
-  for(let i=1;i<lines.length;i++){
-    let obj = {};
-    let currentline=lines[i].split(",");
-
-    for(let j=0;j<headers.length;j++){
-      obj[headers[j]] = currentline[j];
-    }
-    result.push(obj);
-  }
-  return result; //JavaScript object
-}
 
 function createGeoView (jsonData) {
   let boston = 0;

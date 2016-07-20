@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { csvJSON, countNumOfAMonth } from '../utils/helpers';
 
 export default Ember.Route.extend({
   model() {
@@ -8,49 +9,7 @@ export default Ember.Route.extend({
       issues: issues()
     });
   }
-
-  // setupController(controller, models) {
-  //   controller.set('employees', models.employees);
-  //   controller.set('customers', models.customers);
-  //   controller.set('issues', models.issues);
-  // }
 });
-
-function csvJSON (csv) {
-  let lines=csv.split("\n");
-  let result = [];
-  let headers=lines[0].split(",");
-  for(let i=1;i<lines.length;i++){
-    let obj = {};
-    let currentline=lines[i].split(",");
-
-    for(let j=0;j<headers.length;j++){
-      obj[headers[j]] = currentline[j];
-    }
-    result.push(obj);
-  }
-  return result; //JavaScript object
-}
-
-// Count the number of customer signups of each month
-function countNumOfAMonth (signupDate, total) {
-  let monthInt = parseInt(signupDate.substr(0, signupDate.indexOf('/')));
-
-  ( monthInt === 1 ) ? total[0]++ : null;
-  ( monthInt === 2 ) ? total[1]++ : null;
-  ( monthInt === 3 ) ? total[2]++ : null;
-  ( monthInt === 4 ) ? total[3]++ : null;
-  ( monthInt === 5 ) ? total[4]++ : null;
-  ( monthInt === 6 ) ? total[5]++ : null;
-  ( monthInt === 7 ) ? total[6]++ : null;
-  ( monthInt === 8 ) ? total[7]++ : null;
-  ( monthInt === 9 ) ? total[8]++ : null;
-  ( monthInt === 10 ) ? total[9]++ : null;
-  ( monthInt === 11 ) ? total[10]++ : null;
-  ( monthInt === 12 ) ? total[11]++ : null;
-
-  return total;
-}
 
 // Customer Aquisition Line Chart of each month
 function createLineChart (data) {
@@ -66,7 +25,7 @@ function createLineChart (data) {
 
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ['Year', 'Per Month Signups'],
+      ['Year', 'Paid Customers'],
       ['Jan',  monthNumArray[0]],
       ['Feb',  monthNumArray[1]],
       ['Mar',  monthNumArray[2]],
@@ -82,7 +41,7 @@ function createLineChart (data) {
     ]);
 
     var options = {
-      title: 'Customer sinups / motnh in 2015',
+      title: 'Paid Customer / Month in 2015',
       curveType: 'function',
       legend: { position: 'bottom' }
     };
@@ -163,40 +122,6 @@ function createGeoView (jsonData) {
 
 // Fetch employees data and display the number
 function fetchEmployees() {
-  // Version 1
-
-  // $.get('./data/employees.csv')
-  //   .then((data) => {
-  //     let jsonData = csvJSON(data);
-  //     console.log('Initial Employees Data Loaded');
-  //     setTimeout(() => {
-  //       $('#emp-size').text(jsonData.length);
-  //       createGeoView(jsonData);
-  //     }, 100);
-  //     return jsonData;
-  //   });
-  
-  // // POLLING: Fetch new data every hour
-  // setInterval(() => {
-  //   $.get('./data/employees.csv')
-  //     .then((data) => {
-  //       let jsonData = csvJSON(data);
-  //       console.log('Polling Employees Data');
-  //       setTimeout(() => {
-  //         // $('#emp-size').text(jsonData.length);
-  //         var svgTextElement = document.getElementById("emp-size");
-  //         var textNode = svgTextElement.childNodes[0];
-  //         textNode.nodeValue = jsonData.length;
-
-  //         createGeoView(jsonData);
-  //       }, 200);
-  //       return jsonData;
-  //     });
-  // },  3000);
-
-
-  // Version 2
-
 
   // Initial Load
   $.get('./data/employees.csv')
@@ -255,34 +180,6 @@ function fetchEmployees() {
 
 // Fetch customers data and display the number
 function fetchCustoemrs() {
-  // $.getJSON('./data/customers.json')
-  //   .then((data) => {
-  //     console.log('Initial Customers Data Loaded');
-  //     setTimeout(() => {
-  //       $('#cus-size').text(data.length);
-  //       createLineChart(data);
-  //     }, 200);
-  //     return data;
-  //   });
-
-  // // POLLING: Fetch new data every hour
-  // setInterval(() => {
-  //   return $.get('./data/customers.json')
-  //     .then((data) => {
-  //       console.log('Polling Customers Data');
-  //       setTimeout(() => {
-  //         // $('#cus-size').text(data.length);
-  //         var svgTextElement = document.getElementById("cus-size");
-  //         var textNode = svgTextElement.childNodes[0];
-  //         textNode.nodeValue = data.length;
-
-  //         createLineChart(data);
-  //       }, 100);
-
-  //       return data;
-  //     });
-  // },  3000);
-
 
   // Initial Load
   $.getJSON('./data/customers.json')
@@ -332,50 +229,6 @@ function fetchCustoemrs() {
 
 // Fetch issues data and display the number of closed and open issues
 function issues() {
-  // $.getJSON('./data/issues.json')
-  //   .then((data) => {
-  //     console.log('Initial Issues Data Loaded');
-  //     let open_issues = data.filter((d) => {
-  //       return d.status_open === true;
-  //     });
-      
-  //     let closed_issues = data.filter((d) => {
-  //       return d.status_open === false;
-  //     });
-
-  //     $('#open-size').text(open_issues.length);
-  //     $('#closed-size').text(closed_issues.length);
-
-  //     return { data, open_issues, closed_issues };
-  //   });
-  
-  // // POLLING: Fetch new data every hour
-  // setInterval(() => {
-  //   return $.get('./data/issues.json')
-  //     .then((data) => {
-  //       console.log('Polling Issues Data');
-  //       let open_issues = data.filter((d) => {
-  //         return d.status_open === true;
-  //       });
-        
-  //       let closed_issues = data.filter((d) => {
-  //         return d.status_open === false;
-  //       });
-
-  //       // $('#open-size').text(open_issues.length);
-  //       // $('#closed-size').text(closed_issues.length);
-        // var svgTextElement1 = document.getElementById("open-size");
-        // var textNode1 = svgTextElement1.childNodes[0];
-        // textNode1.nodeValue = open_issues.length;
-
-        // var svgTextElement2 = document.getElementById("closed-size");
-        // var textNode2 = svgTextElement2.childNodes[0];
-        // textNode2.nodeValue = closed_issues.length;
-
-  //       return { data, open_issues, closed_issues };
-  //     });
-  // }, 3000);
-
 
   // Initial Load
   $.getJSON('./data/issues.json')

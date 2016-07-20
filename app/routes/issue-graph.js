@@ -1,65 +1,26 @@
 import Ember from 'ember';
+import { countNumOfAMonth } from '../utils/helpers';
 
 export default Ember.Route.extend({
   model() {
     return Em.RSVP.hash({
       customers: fetchCustomers(),
-      // $.getJSON('./data/customers.json')
-      //             .then((data) => {
-
-      //               setTimeout(() => {
-      //                 createLineChart(data);
-      //               }, 100);
-
-      //               return data;
-      //             }),
-
       issues: fetchIssues()
-      // $.getJSON('./data/issues.json')
-      //           .then((data) => {
-
-      //             setTimeout(() => {
-      //               createBarChart(data);
-      //               createIssueChart(data);
-      //             }, 100);
-
-      //             return data;
-      //           })
     });
   }
 });
-
-// Count the number of customer signups of each month
-function countNumOfAMonth (signupDate, total) {
-  let monthInt = parseInt(signupDate.substr(0, signupDate.indexOf('/')));
-
-  ( monthInt === 1 ) ? total[0]++ : null;
-  ( monthInt === 2 ) ? total[1]++ : null;
-  ( monthInt === 3 ) ? total[2]++ : null;
-  ( monthInt === 4 ) ? total[3]++ : null;
-  ( monthInt === 5 ) ? total[4]++ : null;
-  ( monthInt === 6 ) ? total[5]++ : null;
-  ( monthInt === 7 ) ? total[6]++ : null;
-  ( monthInt === 8 ) ? total[7]++ : null;
-  ( monthInt === 9 ) ? total[8]++ : null;
-  ( monthInt === 10 ) ? total[9]++ : null;
-  ( monthInt === 11 ) ? total[10]++ : null;
-  ( monthInt === 12 ) ? total[11]++ : null;
-
-  return total;
-}
 
 // Customer Aquisition Line Chart of each month
 function createLineChart (data) {
   let total = Array(12).fill(0);
   let monthNumArray = [];
 
-  // Count number of signups of each month
+  // Count number of signups (paid) of each month
   data.forEach((d) => {
     monthNumArray = countNumOfAMonth(d.signup_date, total);
   });
 
-  // Accumulate number of signups each month
+  // Accumulate number of signups (paid) each month
   for (let i = 1; 12 > i; i++) {
     monthNumArray[i] += monthNumArray[i-1];
   }
