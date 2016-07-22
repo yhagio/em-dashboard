@@ -6,32 +6,34 @@ let bounds;
 
 export default Ember.Route.extend({
   model() {
-    // Initial Load
+    // On Initial Load:
     $.get('./data/employees.csv')
         .then((data) => {
           let jsonData = csvJSON(data);
           console.log('Initial employees data Loaded');
 
-          // Display Employee Geospatial View:
+          // Display Employee Map & Chart View:
           // To avoid `document.getElementById('map-canvas')`
           // return 'null' delay it by 100 milliseconds
           setTimeout(() => {
-            createDonutChart(jsonData);
+            createDonutChart(jsonData); // Create Donut Chart of Employees
             initializeMap(); // Initialize Google Map once!
-            updateMarkers(jsonData)
+            updateMarkers(jsonData); // Set Markers on Google Map
           }, 100);
           
           return jsonData;
         });
-
-    // Fetch new data every 3 seconds
-    // if route changes, it stops polling
+    
+    // Polling System:
+    // Fetch new data every 3 seconds. If route changes, it stops polling
     let getHandleEmployeesData = function() {
-      setTimeout(() => { // Make sure route changed if changed
-        if (window.location.pathname !== '/employees') {
+      // Delay 100ms to make sure routes changed or not
+      setTimeout(() => {
+        if (window.location.hash !== '#/employees') {
           console.log('Cancelled polling employees data');
           clearInterval(looping);
         } else {
+          // If route is same (User stays employee page), keep polling
           return $.get('./data/employees.csv')
                   .then((data) => {
                     console.log('Polling employees data');
@@ -95,64 +97,6 @@ function createDonutChart (jsonData) {
     chart.draw(data, options);
   }
 
-  // Draw Geographic Map Chart of Employees
-  function drawMap() {
-
-    // setTimeout(() => {
-      // let bounds = new google.maps.LatLngBounds();
-      // const USA = {lat: 37.09024, lng: -95.712891};
-      // const map = new google.maps.Map(document.getElementById("map-canvas"), {
-      //   zoom: 3,
-      //   center: USA
-      // });
-
-      /*
-
-      // Markers array
-      const markers = [
-        ['Boston', boston, 42.3135417, -71.1975856],
-        ['Chicago', chicago, 41.8339026, -88.0130316],
-        ['San Francisco', sanfran, 37.7578149, -122.507812],
-        ['Orlando', orlando, 28.4813986, -81.5091802]
-      ];
-
-      // Info Content array of each marker
-      function infoWindowContent(name, num) {
-        return `<div class="markerInfo"><h5>${name}</h5><p>Number of employees: ${num}</p></div>`;
-      };
-
-      // Display multiple markers on a map
-      let infoWindow = new google.maps.InfoWindow();
-      let marker;
-
-      for (let i = 0; markers.length > i; i++) {
-        let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
-        bounds.extend(position);
-
-        // Setting each marker location
-        marker = new google.maps.Marker({
-          position,
-          map,
-          title: markers[i][0]
-        });
-
-        // Setting each marker's info window
-        google.maps.event.addListener(marker, 'click', ((marker, i) => {
-          return () => {
-            infoWindow.setContent(infoWindowContent(markers[i][0], markers[i][1]));
-            infoWindow.open(map, marker);
-          }
-        })(marker, i));
-
-        // Automatically center the map fitting all markers on the screen
-        map.fitBounds(bounds);
-      }
-      */
-
-    // }, 300); // ** For avoiding failing to find the element to attach the map, wait 300ms
-
-  }
-
   // When window is resized, make sure chart & map + marker is responsive
   $(window).resize(function(){
     drawChart(jsonData);
@@ -197,39 +141,30 @@ function updateMarkers(jsonData) {
   const markers = [
     ['Boston', boston, 42.3135417, -71.1975856],
     ['Chicago', chicago, 41.8339026, -88.0130316],
-    ['San Francisco', sanfran, 37.7578149, -122.507812],
+    ['SanFrancisco', sanfran, 37.7578149, -122.507812],
     ['Orlando', orlando, 28.4813986, -81.5091802]
   ];
 
-  // Info Content array of each marker
-  function infoWindowContent(name, num) {
-    return `<div class="markerInfo"><h5>${name}</h5><p>Number of employees: ${num}</p></div>`;
-  };
-
   // Display multiple markers on a map
-  let infoWindow = new google.maps.InfoWindow();
   let marker;
+  let labelNum = 0;
 
-  // Go though each markers to add click eventListener to enable infowindows
+  // Place each marker
   for (let i = 0; markers.length > i; i++) {
     let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
     bounds.extend(position);
 
     // Setting each marker location
+
     marker = new google.maps.Marker({
       position,
       map,
-      title: markers[i][0]
+      title: markers[i][0],
+      label: `${labelNum++}`
     });
 
-    // Setting each marker's info window
-    google.maps.event.addListener(marker, 'click', ((marker, i) => {
-      return () => {
-        infoWindow.setContent(infoWindowContent(markers[i][0], markers[i][1]));
-        infoWindow.open(map, marker);
-      }
-    })(marker, i));
-
+    // Display employee numbers
+    $(`#num-emp-${markers[i][0]}`).text(markers[i][1]);    
 
     //Automatically center the map fitting all markers on the screen on resizing window
     $(window).resize(function(){

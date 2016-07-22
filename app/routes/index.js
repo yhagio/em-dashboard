@@ -96,20 +96,15 @@ function updateMarkers(jsonData) {
   const markers = [
     ['Boston', boston, 42.3135417, -71.1975856],
     ['Chicago', chicago, 41.8339026, -88.0130316],
-    ['San Francisco', sanfran, 37.7578149, -122.507812],
+    ['SanFrancisco', sanfran, 37.7578149, -122.507812],
     ['Orlando', orlando, 28.4813986, -81.5091802]
   ];
 
-  // Info Content array of each marker
-  function infoWindowContent(name, num) {
-    return `<div class="markerInfo"><h5>${name}</h5><p>Number of employees: ${num}</p></div>`;
-  };
-
   // Display multiple markers on a map
-  let infoWindow = new google.maps.InfoWindow();
   let marker;
+  let labelNum = 0;
 
-  // Go though each markers to add click eventListener to enable infowindows
+  // Add each marker on map
   for (let i = 0; markers.length > i; i++) {
     let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
     bounds.extend(position);
@@ -118,17 +113,12 @@ function updateMarkers(jsonData) {
     marker = new google.maps.Marker({
       position,
       map,
-      title: markers[i][0]
+      title: markers[i][0],
+      label: `${labelNum++}`
     });
 
-    // Setting each marker's info window
-    google.maps.event.addListener(marker, 'click', ((marker, i) => {
-      return () => {
-        infoWindow.setContent(infoWindowContent(markers[i][0], markers[i][1]));
-        infoWindow.open(map, marker);
-      }
-    })(marker, i));
-
+    // Display employee number
+    $(`#num-emp-${markers[i][0]}`).text(markers[i][1]);
 
     //Automatically center the map fitting all markers on the screen on resizing window
     $(window).resize(function(){
@@ -170,7 +160,8 @@ function fetchEmployees() {
   // if route changes, it stops polling
   let getHandleEmployeesData = function() {
     setTimeout(() => { // Make sure route changed if changed
-      if (window.location.pathname !== '/') {
+      console.log('!!!window.location.hash ', window.location.hash );
+      if ((window.location.hash !== '') && (window.location.hash !== '#/')) {
         console.log('Cancelled polling employees data');
         clearInterval(looping);
       } else {
@@ -219,7 +210,7 @@ function fetchCustoemrs() {
   // if route changes, it stops polling
   let getHandleCustomersData = function() {
     setTimeout(() => { // Make sure route changed if changed
-      if (window.location.pathname !== '/') {
+      if ((window.location.hash !== '') && (window.location.hash !== '#/')) {
         console.log('Cancelled polling customers data');
         clearInterval(looping);
       } else {
@@ -276,7 +267,7 @@ function issues() {
   // if route changes, it stops polling
   let getHandleIssuesData = function() {
     setTimeout(() => { // Make sure route changed if changed
-      if (window.location.pathname !== '/') {
+      if ((window.location.hash !== '') && (window.location.hash !== '#/')) {
         console.log('Cancelled polling issues data');
         clearInterval(looping);
       } else {

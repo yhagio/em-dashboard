@@ -134,8 +134,21 @@ html, body {
 }
 
 .employee-loc-title {
-  /*margin: 20px;*/
-  text-align: center;
+  margin-left: 20%;
+}
+
+.employee-loc-detail {
+  /*width: 195px;*/
+  margin-left: 20%;
+  padding: 0;
+}
+
+.employee-loc-detail-text {
+  line-height: 0.5;
+}
+
+.map-label-color {
+  color: mediumvioletred;
 }
 
 .employee-map-area {

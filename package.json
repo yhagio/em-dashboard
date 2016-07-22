@@ -10,7 +10,7 @@
   "scripts": {
     "build": "ember build",
     "prod": "ember build --prod && cd dist && http-server",
-    "start": "ember server",
+    "start": "ember build && cd dist && http-server",
     "test": "ember test"
   },
   "repository": "",

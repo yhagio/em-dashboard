@@ -14,7 +14,7 @@ export default Ember.Route.extend({
     // Cancel polling issues data when route changes, but
     // make delay it 100ms make sure to route changed before cancelling it
     setTimeout(() => {
-      if (window.location.pathname !== '/issues') {
+      if (window.location.hash !== '#/issues') {
         console.log('Cancelled polling issues data');
         Ember.run.cancel(pollIssues);
       }

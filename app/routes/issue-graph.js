@@ -166,7 +166,7 @@ function fetchCustomers() {
   // if route changes, it stops polling
   let getHandleCustomersData = function() {
     setTimeout(() => { // Make sure route changed if changed
-      if (window.location.pathname !== '/issue-graph') {
+      if (window.location.hash !== '#/issue-graph') {
         console.log('Cancelled polling customers data');
         clearInterval(looping);
       } else {
@@ -207,7 +207,7 @@ function fetchIssues() {
   // if route changes, it stops polling
   let getHandleIssuesData = function() {
     setTimeout(() => { // Make sure route changed if changed
-      if (window.location.pathname !== '/issue-graph') {
+      if (window.location.hash !== '#/issue-graph') {
         console.log('Cancelled polling issues data');
         clearInterval(looping);
       } else {
