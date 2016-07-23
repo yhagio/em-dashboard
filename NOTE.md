@@ -99,3 +99,6 @@ Polling Data
   }, 3000);
   return $.get('./data/employees.csv');
 ```
+
+(July 23, 2016)
+- modified npm scripts, disabled liveReload
