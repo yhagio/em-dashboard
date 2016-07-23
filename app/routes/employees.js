@@ -57,15 +57,15 @@ export default Ember.Route.extend({
 // Create Donut Chart of employee numbers of each office in U.S.
 function createDonutChart (jsonData) {
   // For DEMO purpose, randomly generates base employee number for each office
-  let boston = (Math.floor(Math.random() * 10) + 1);
-  let sanfran = (Math.floor(Math.random() * 10) + 1);
-  let orlando = (Math.floor(Math.random() * 10) + 1);
-  let chicago = (Math.floor(Math.random() * 10) + 1);
+  // let boston = (Math.floor(Math.random() * 10) + 1);
+  // let sanfran = (Math.floor(Math.random() * 10) + 1);
+  // let orlando = (Math.floor(Math.random() * 10) + 1);
+  // let chicago = (Math.floor(Math.random() * 10) + 1);
 
-  // let boston = 0;
-  // let sanfran = 0;
-  // let orlando = 0;
-  // let chicago = 0;
+  let boston = 0;
+  let sanfran = 0;
+  let orlando = 0;
+  let chicago = 0;
 
   jsonData.forEach((employee) => {
     (employee.location === 'Boston') ? boston++ : null;
@@ -119,15 +119,19 @@ function initializeMap() {
 // Marker's position is fixed to 4 office locations.
 function updateMarkers(jsonData) {
   // For DEMO purpose, randomly generates base employee number for each office
-  let boston = (Math.floor(Math.random() * 10) + 1);
-  let sanfran = (Math.floor(Math.random() * 10) + 1);
-  let orlando = (Math.floor(Math.random() * 10) + 1);
-  let chicago = (Math.floor(Math.random() * 10) + 1);
+  // let boston = (Math.floor(Math.random() * 10) + 1);
+  // let sanfran = (Math.floor(Math.random() * 10) + 1);
+  // let orlando = (Math.floor(Math.random() * 10) + 1);
+  // let chicago = (Math.floor(Math.random() * 10) + 1);
 
-  // let boston = 0;
-  // let sanfran = 0;
-  // let orlando = 0;
-  // let chicago = 0;
+  let boston = 0;
+  let sanfran = 0;
+  let orlando = 0;
+  let chicago = 0;
+
+  let marker;
+  const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let labelIndex = 0;
 
   // Count each office location's number of employees
   jsonData.forEach((employee) => {
@@ -138,31 +142,26 @@ function updateMarkers(jsonData) {
   });
 
   // Markers array
-  const markers = [
+  let markers = [
     ['Boston', boston, 42.3135417, -71.1975856],
     ['Chicago', chicago, 41.8339026, -88.0130316],
     ['SanFrancisco', sanfran, 37.7578149, -122.507812],
     ['Orlando', orlando, 28.4813986, -81.5091802]
   ];
-
-  // Display multiple markers on a map
-  let marker;
-  let labelNum = 0;
-
+  
   // Place each marker
   for (let i = 0; markers.length > i; i++) {
     let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
     bounds.extend(position);
 
     // Setting each marker location
-
     marker = new google.maps.Marker({
       position,
       map,
       title: markers[i][0],
-      label: `${labelNum++}`
-    });
-
+      label: labels[labelIndex++ % labels.length]
+    });    
+    
     // Display employee numbers
     $(`#num-emp-${markers[i][0]}`).text(markers[i][1]);    
 

@@ -3,7 +3,8 @@ import { csvJSON, countNumOfAMonth } from '../utils/helpers';
 
 let map;
 let bounds;
-let randomNum = 0; // Incrementing number for demo purpose
+// Incrementing number for demo purpose
+// let randomNum = 0;
 
 export default Ember.Route.extend({
   model() {
@@ -34,7 +35,7 @@ function createLineChart (data) {
       ['Feb',  monthNumArray[1]],
       ['Mar',  monthNumArray[2]],
       ['Apr',  monthNumArray[3]],
-      ['May',  monthNumArray[4] + randomNum],
+      ['May',  monthNumArray[4]],
       ['Jun',  monthNumArray[5]],
       ['Jul',  monthNumArray[6]],
       ['Aug',  monthNumArray[7]],
@@ -74,15 +75,19 @@ function initializeMap() {
 // Marker's position is fixed to 4 office locations.
 function updateMarkers(jsonData) {
   // For DEMO purpose, randomly generates base employee number for each office
-  let boston = (Math.floor(Math.random() * 10) + 1);
-  let sanfran = (Math.floor(Math.random() * 10) + 1);
-  let orlando = (Math.floor(Math.random() * 10) + 1);
-  let chicago = (Math.floor(Math.random() * 10) + 1);
+  // let boston = (Math.floor(Math.random() * 10) + 1);
+  // let sanfran = (Math.floor(Math.random() * 10) + 1);
+  // let orlando = (Math.floor(Math.random() * 10) + 1);
+  // let chicago = (Math.floor(Math.random() * 10) + 1);
 
-  // let boston = 0;
-  // let sanfran = 0;
-  // let orlando = 0;
-  // let chicago = 0;
+  let boston = 0;
+  let sanfran = 0;
+  let orlando = 0;
+  let chicago = 0;
+
+  let marker;
+  const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let labelIndex = 0;
 
   // Count each office location's number of employees
   jsonData.forEach((employee) => {
@@ -100,10 +105,6 @@ function updateMarkers(jsonData) {
     ['Orlando', orlando, 28.4813986, -81.5091802]
   ];
 
-  // Display multiple markers on a map
-  let marker;
-  let labelNum = 0;
-
   // Add each marker on map
   for (let i = 0; markers.length > i; i++) {
     let position = new google.maps.LatLng(markers[i][2], markers[i][3]);
@@ -114,7 +115,7 @@ function updateMarkers(jsonData) {
       position,
       map,
       title: markers[i][0],
-      label: `${labelNum++}`
+      label: labels[labelIndex++ % labels.length]
     });
 
     // Display employee number
@@ -173,7 +174,7 @@ function fetchEmployees() {
                   setTimeout(() => {
                     let svgTextElement = document.getElementById("emp-size");
                     let textNode = svgTextElement.childNodes[0];
-                    textNode.nodeValue = jsonData.length + randomNum;
+                    textNode.nodeValue = jsonData.length;; // + randomNum;
 
                     // createGeoView(jsonData);
                     updateMarkers(jsonData)
@@ -221,7 +222,7 @@ function fetchCustoemrs() {
                   setTimeout(() => {
                     var svgTextElement = document.getElementById("cus-size");
                     var textNode = svgTextElement.childNodes[0];
-                    textNode.nodeValue = data.length + randomNum;
+                    textNode.nodeValue = data.length; // + randomNum;
 
                     createLineChart(data);
                   }, 100);
@@ -273,8 +274,8 @@ function issues() {
       } else {
         return $.getJSON('./data/issues.json')
                 .then((data) => {
-                  // ** just incrementing to see real time update for demo purpose
-                  randomNum++;
+                  // ** DEMO purpose : just incrementing to see real time update
+                  // randomNum++;
 
                   console.log('Polling issues data');
 
@@ -289,11 +290,11 @@ function issues() {
 
                     let svgTextElement1 = document.getElementById("open-size");
                     let textNode1 = svgTextElement1.childNodes[0];
-                    textNode1.nodeValue = open_issues.length + randomNum;
+                    textNode1.nodeValue = open_issues.length; // + randomNum;
 
                     let svgTextElement2 = document.getElementById("closed-size");
                     let textNode2 = svgTextElement2.childNodes[0];
-                    textNode2.nodeValue = closed_issues.length + randomNum;
+                    textNode2.nodeValue = closed_issues.length; // + randomNum;
 
                   }, 100);
                   
