@@ -2,6 +2,8 @@
 
 Corporate dashboard built with Ember.js with Material Design Lite.
 
+### [DEMO](https://em-dashboard.firebaseapp.com/)
+
 **Features**
 - Responsive working in Desktop & Mobile browser
 - Visualization with Google Chart & Google Map
